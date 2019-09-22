@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for product in products %}
+        <div class="container">
+        <h2>{{product.name}}</h2>
+        </div>
+    {% endfor %}
+{% endblock %}
