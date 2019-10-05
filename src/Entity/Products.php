@@ -29,7 +29,7 @@ class Products
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
      */
     private $name;
 
@@ -39,7 +39,7 @@ class Products
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
      */
     private $img;
 
@@ -77,6 +77,21 @@ class Products
      * @ORM\Column(type="float", options={"default": 0})
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="string", length=6)
+     */
+    private $atk;
+
+    /**
+     * @ORM\Column(type="string", length=6)
+     */
+    private $def;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $text;
 
     public function getId(): ?int
     {
@@ -224,5 +239,41 @@ class Products
 
     public function getFormattedPrice(): string {
         return number_format($this->price, 2, ',', ' ');
+    }
+
+    public function getAtk(): ?string
+    {
+        return $this->atk;
+    }
+
+    public function setAtk(string $atk): self
+    {
+        $this->atk = $atk;
+
+        return $this;
+    }
+
+    public function getDef(): ?string
+    {
+        return $this->def;
+    }
+
+    public function setDef(string $def): self
+    {
+        $this->def = $def;
+
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
+
+        return $this;
     }
 }
