@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 
@@ -25,7 +27,7 @@ class Products
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $desc;
+    private $description;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -43,59 +45,69 @@ class Products
     private $imgSmall;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $race;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $archetype;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $set_name;
 
         /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $set_code;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $set_rarity;
 
     /**
-     * @ORM\Column(type="float", options={"default": 0})
+     * @ORM\Column(type="float", options={"default": 0}, nullable=true)
      */
     private $cost;
 
     /**
-     * @ORM\Column(type="float", options={"default": 0})
+     * @ORM\Column(type="float", options={"default": 0}, nullable=true)
      */
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=6, nullable=true)
      */
     private $atk;
 
     /**
-     * @ORM\Column(type="string", length=6)
+     * @ORM\Column(type="string", length=6, nullable=true)
      */
     private $def;
 
     /**
-     * @ORM\Column(type="integer", length=2)
+     * @ORM\Column(type="integer", length=2, nullable=true)
      */
     private $level;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $attribute;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="card_id", orphanRemoval=true)
+     */
+    private $stocksList;
+
+    public function __construct()
+    {
+        $this->stocksList = new ArrayCollection();
+    }
 
     public function getSlug(): string
     {
@@ -164,7 +176,7 @@ class Products
     /**
      * @return mixed
      */
-    public function getDesc()
+    public function getDescription()
     {
         return $this->desc;
     }
@@ -174,7 +186,7 @@ class Products
      *
      * @return self
      */
-    public function setDesc($desc)
+    public function setDescription($desc)
     {
         $this->desc = $desc;
 
@@ -457,6 +469,37 @@ class Products
     public function setAttribute($attribute)
     {
         $this->attribute = $attribute;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Stock[]
+     */
+    public function getStocksList(): Collection
+    {
+        return $this->stocksList;
+    }
+
+    public function addStocksList(Stock $stocksList): self
+    {
+        if (!$this->stocksList->contains($stocksList)) {
+            $this->stocksList[] = $stocksList;
+            $stocksList->setCardId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStocksList(Stock $stocksList): self
+    {
+        if ($this->stocksList->contains($stocksList)) {
+            $this->stocksList->removeElement($stocksList);
+            // set the owning side to null (unless already changed)
+            if ($stocksList->getCardId() === $this) {
+                $stocksList->setCardId(null);
+            }
+        }
 
         return $this;
     }

@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use App\Form\UserType;
 use App\Entity\Products;
 use App\Repository\ProductsRepository;
 
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,46 +24,33 @@ class ShopController extends AbstractController
      */
     public function index() : Response
     {
-                $products = $this->repository->findAll();
+        $products = $this->repository->findAll();
         return $this->render('shop/index.html.twig', [
             'products' => $products
-        ]);
+            ]);
     }
 
-
-    /**
-     * @Route("../user/login", name="login")
+     /**
+     * @Route("/shop", name="shop")
      * @return Response
      */
-    public function login() : Response
+    public function shop() : Response
     {
         $products = $this->repository->findAll();
-        return $this->render('user/login.html.twig', [
+        return $this->render('shop/shop.html.twig', [
             'products' => $products
-        ]);
+            ]);
     }
-
-    /**
-     * @Route("../user/signup", name="signup")
+    
+     /**
+     * @Route("/collection", name="collection")
      * @return Response
      */
-    public function signup(User $user, Request $request) : Response
+    public function collection() : Response
     {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->manager->persist($user);
-            $this->manager->flush();
-            $this->addFlash("success", "Votre compte est créé avec succès");
-            return $this->redirectToRoute('login');
-        }
-
         $products = $this->repository->findAll();
-        return $this->render('user/signup.html.twig', [
-            'products' => $products,
-            'form' => $form->createView()
-        ]);
+        return $this->render('shop/collection.html.twig', [
+            'products' => $products
+            ]);
     }
-
 } 

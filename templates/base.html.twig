@@ -24,7 +24,7 @@
 					<div class="col-lg-2 text-center text-lg-left">
 						<!-- logo -->
 						<a href="{{ path('home')}}}}" class="site-logo">
-							<img src="img/logo.png" alt="">
+							<h2>Y C S</h2>
 						</a>
 					</div>
 					<div class="col-xl-6 col-lg-5">
@@ -56,9 +56,11 @@
 				<!-- menu -->
 				<ul class="main-menu">
 					<li><a href="{{ path('home')}}">Accueil</a></li>
-					<!-- <li><a href="#">Women</a></li>
-					<li><a href="#">Men</a></li>
-					<li><a href="#">Jewelry
+					<li><a href="{{ path('shop')}}">Boutique</a></li>
+					{% if  app.user %}
+						<li><a href="{{ path('collection')}}">Ma collection</a></li>
+					{% endif %}
+					<!-- <li><a href="#">Jewelry
 						<span class="new">New</span>
 					</a></li> -->
 					<!-- <li><a href="#">Shoes</a>
@@ -75,6 +77,8 @@
 		</nav>
 	</header>
         {% block body %}{% endblock %}
+	<footer>
+	</footer>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
             <!-- {{ encore_entry_script_tags('main') }}
