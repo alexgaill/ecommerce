@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +48,16 @@ class Stock
      * @ORM\JoinColumn(nullable=false)
      */
     private $card_id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Entry", mappedBy="id_stock", orphanRemoval=true)
+     */
+    private $entries;
+
+    public function __construct()
+    {
+        $this->entries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +132,37 @@ class Stock
     public function setCardId(?Products $card_id): self
     {
         $this->card_id = $card_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Entry[]
+     */
+    public function getEntries(): Collection
+    {
+        return $this->entries;
+    }
+
+    public function addEntry(Entry $entry): self
+    {
+        if (!$this->entries->contains($entry)) {
+            $this->entries[] = $entry;
+            $entry->setIdStock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntry(Entry $entry): self
+    {
+        if ($this->entries->contains($entry)) {
+            $this->entries->removeElement($entry);
+            // set the owning side to null (unless already changed)
+            if ($entry->getIdStock() === $this) {
+                $entry->setIdStock(null);
+            }
+        }
 
         return $this;
     }

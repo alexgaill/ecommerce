@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,6 +72,16 @@ class User
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Arrivage", mappedBy="id_client", orphanRemoval=true)
+     */
+    private $listArrivages;
+
+    public function __construct()
+    {
+        $this->listArrivages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -204,6 +216,37 @@ class User
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Arrivage[]
+     */
+    public function getListArrivages(): Collection
+    {
+        return $this->listArrivages;
+    }
+
+    public function addListArrivage(Arrivage $listArrivage): self
+    {
+        if (!$this->listArrivages->contains($listArrivage)) {
+            $this->listArrivages[] = $listArrivage;
+            $listArrivage->setIdClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListArrivage(Arrivage $listArrivage): self
+    {
+        if ($this->listArrivages->contains($listArrivage)) {
+            $this->listArrivages->removeElement($listArrivage);
+            // set the owning side to null (unless already changed)
+            if ($listArrivage->getIdClient() === $this) {
+                $listArrivage->setIdClient(null);
+            }
+        }
 
         return $this;
     }
