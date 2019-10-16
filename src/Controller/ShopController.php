@@ -44,9 +44,12 @@ class ShopController extends AbstractController
     {
         $this->repository = $repository;
         $this->manager = $manager;
+        $setCodes = $this->repository->set_codes();
+        dump($setCodes);
         $products = $this->repository->findAll();
         return $this->render('shop/shop.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'setCodes' => $setCodes
             ]);
     }
     

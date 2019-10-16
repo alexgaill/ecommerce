@@ -19,6 +19,20 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
+    /**
+     * @return Products[] Returns an array of Products objects
+     */
+    
+    public function set_codes()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUBSTRING(p.set_code, 1,4) AS set, COUNT(p.id) AS totalCard')
+            ->groupBy('set')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
     // /**
     //  * @return Products[] Returns an array of Products objects
     //  */

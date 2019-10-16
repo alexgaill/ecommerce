@@ -11,6 +11,8 @@
     import '../css/style.css';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to require it.
- require('jquery');
+//  require('jquery');
+    const $ = require('jquery');
+    global.$ = global.jQuery = $;
 
 // console.log('Hello Webpack Encore! Edit me in assets/js/app.js');

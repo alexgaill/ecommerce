@@ -23,7 +23,14 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
+    // .addEntry('jquery', './assets/js/jquery-3.2.1.min.js')
     .addEntry('app', './assets/js/app.js')
+    .addEntry('bootstrap', './assets/js/bootstrap.min.js')
+    .addEntry('jquery-ui', './assets/js/jquery-ui.min.js')
+    .addEntry('nicescroll', './assets/js/jquery.nicescroll.min.js')
+    .addEntry('slicknav', './assets/js/jquery.slicknav.min.js')
+    .addEntry('owlcarousel', './assets/js/owl.carousel.min.js')
+    .addEntry('zoom', './assets/js/jquery.zoom.min.js')
     .addEntry('main', './assets/js/main.js')
     .addEntry('map', './assets/js/map.js')
 
@@ -65,7 +72,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    // .autoProvidejQuery()
 
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
