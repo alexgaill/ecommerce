@@ -1,14 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="jumbotron container">
-    <div class="col-8 col-md-center">
-    <h2>Nos derniers ajouts</h2>
-    <p>Date d'ajout</p>
-    <a href="#">En savoir plus </a>
-    <div class="container">
-        liste
+    <div class="spad">
+        <div class="jumbotron container">
+            <div class="col-8 text-center container">
+                <h2>Nos derniers ajouts</h2>
+                <table class="table table-stripped table-hover mt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col" rowspan="2" class="align-top">Date</th>
+                            <th scope="col" rowspan="2" class="align-top">Nom</th>
+                            <th scope="col" colspan="4" class="align-top">Quantité de nouvelles cartes triées par état</th>
+                            <th scope="col" rowspan="2" class="align-top">#</th>
+                        </tr>
+                        <tr>
+                            <td>Neuves</td>
+                            <td>Correctes</td>
+                            <td>Occasions</td>
+                            <td>Abimées</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for arrivage in arrivages %}
+                            <tr>
+                                <th scope="row">{{arrivage.createdAt}}</th>
+                                <td>{{arrivage.name}}</td>
+                                <td><a href="#">En savoir plus</a></td>
+
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="spad">
+            <div class="container border">
+                <h2>Revendre vos cartes</h2>
+                <p>Vous souhaitez revendre vos cartes, contactez-nous via le formulaire présent <a href="#">ici</a></p>
+            </div>
+        </div>
     </div>
-    </div>
-</div>
 {% endblock %}

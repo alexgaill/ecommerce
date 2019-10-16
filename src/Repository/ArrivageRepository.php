@@ -19,22 +19,19 @@ class ArrivageRepository extends ServiceEntityRepository
         parent::__construct($registry, Arrivage::class);
     }
 
-    // /**
-    //  * @return Arrivage[] Returns an array of Arrivage objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Arrivage[] Returns an array of Arrivage objects
+     */
+    public function findLastTen()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
+            ->andWhere("a.type = 'achat'")
+            ->orderBy('a.id', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Arrivage

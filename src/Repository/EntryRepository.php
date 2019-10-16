@@ -19,22 +19,23 @@ class EntryRepository extends ServiceEntityRepository
         parent::__construct($registry, Entry::class);
     }
 
-    // /**
-    //  * @return Entry[] Returns an array of Entry objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Entry[] Returns an array of Entry objects
+     */
+    
+    public function quantity($value)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
+            ->select("SUM(new) AS new, SUM(correct) AS correct, SUM(occasion) AS occasion, SUM(abimee) AS abimee")
+            ->andWhere('e.id_arrivage = :val')
             ->setParameter('val', $value)
             ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            // ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Entry
