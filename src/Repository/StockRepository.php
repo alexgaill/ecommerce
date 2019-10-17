@@ -19,6 +19,21 @@ class StockRepository extends ServiceEntityRepository
         parent::__construct($registry, Stock::class);
     }
 
+    /**
+     * @return Stock[] Returns an array of Stock objects
+     */
+
+    public function listStockType()
+    {
+        return $this->createQueryBuilder('s')
+            ->select('s.stockType')
+            ->groupBy('s.stockType')
+            ->orderBy('s.stockType', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Stock[] Returns an array of Stock objects
     //  */

@@ -6,6 +6,7 @@ use App\Entity\Products;
 use App\Repository\EntryRepository;
 use App\Repository\ArrivageRepository;
 use App\Repository\ProductsRepository;
+use App\Repository\StockRepository;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +20,10 @@ class ShopController extends AbstractController
      * @Route("/", name="home")
      * @return Response
      */
-    public function index(ObjectManager $manager, ArrivageRepository $repository, EntryRepository $repo) : Response
+    public function index(ArrivageRepository $repository, EntryRepository $repo) : Response
     {
         $this->repository = $repository;
         $this->repo = $repo;
-        $this->manager = $manager;
         
         $arrivage = $this->repository->findLastTen();
         
@@ -40,16 +40,25 @@ class ShopController extends AbstractController
      * @Route("/shop", name="shop")
      * @return Response
      */
-    public function shop(ObjectManager $manager, ProductsRepository $repository) : Response
+    public function shop(ProductsRepository $repository, StockRepository $repo) : Response
     {
         $this->repository = $repository;
-        $this->manager = $manager;
+        $this->repo = $repo;
+
         $setCodes = $this->repository->set_codes();
-        dump($setCodes);
-        $products = $this->repository->findAll();
+        $products = $this->repository->findAllGrouped();
+        $listStockType = $this->repo->listStockType();
+
+        $count=[$this->repository->countCard('new'), 
+                $this->repository->countCard('correct'),
+                $this->repository->countCard('occasion'),
+                $this->repository->countCard('abimee')
+                ];
         return $this->render('shop/shop.html.twig', [
             'products' => $products,
-            'setCodes' => $setCodes
+            'setCodes' => $setCodes,
+            'count' => $count,
+            'listStockType' => $listStockType
             ]);
     }
     

@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Products;
+use App\Entity\Stock;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+// use Doctrine\ORM\Query\Expr\Comparison;
+// use Doctrine\Common\Collections\Expr\Comparison;
 
 /**
  * @method Products|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,6 +31,35 @@ class ProductsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->select('SUBSTRING(p.set_code, 1,4) AS set, COUNT(p.id) AS totalCard')
             ->groupBy('set')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Products[] Returns an array of Products objects
+     */
+
+    public function countCard($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(s.'.$value.') AS '.$value)
+            // ->select('COUNT('.new Comparison('s.new', '>', '0').') AS new, COUNT(s.correct > 0) AS correct, COUNT(s.occasion > 0) AS occasion, COUNT(s.abimee > 0) AS abimee')
+            ->join('App\Entity\Stock', 's', 'WITH', 'p.id = s.card_id')
+            ->where('s.'.$value.' > 0')
+            // ->where('s.new > 0 OR s.correct > 0 OR s.occasion > 0 OR s.abimee > 0')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @return Products[] Returns an array of Products objects
+     */
+    public function findAllGrouped()
+    {
+        return $this->createQueryBuilder('p')
+            ->groupBy('p.name')
             ->getQuery()
             ->getResult()
         ;
