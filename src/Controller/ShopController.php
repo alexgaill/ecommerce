@@ -3,13 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Products;
+
 use App\Repository\EntryRepository;
+use App\Repository\StockRepository;
 use App\Repository\ArrivageRepository;
 use App\Repository\ProductsRepository;
-use App\Repository\StockRepository;
+
+use Knp\Component\Pager\PaginatorInterface;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -40,13 +45,20 @@ class ShopController extends AbstractController
      * @Route("/shop", name="shop")
      * @return Response
      */
-    public function shop(ProductsRepository $repository, StockRepository $repo) : Response
+    public function shop(ProductsRepository $repository, StockRepository $repo, PaginatorInterface $paginator, Request $request) : Response
     {
         $this->repository = $repository;
         $this->repo = $repo;
 
         $setCodes = $this->repository->set_codes();
-        $products = $this->repository->findAllGrouped();
+        $products = $paginator->paginate(
+            $this->repository->findAllGrouped(),
+            $request->query->getInt('page', 1),
+            24
+        );
+        // $products->setCustomParameters([
+        //     'color' => 'black'
+        // ]);
         $listStockType = $this->repo->listStockType();
 
         $count=[$this->repository->countCard('new'), 
@@ -73,4 +85,29 @@ class ShopController extends AbstractController
             'products' => $products
             ]);
     }
+
+    /**
+     * @Route("/card/{slug}-{id}", name="card", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     */
+    public function card(string $slug, Products $product, ProductsRepository $repository) : Response
+    {
+        $this->repository = $repository;
+
+        $setList = $this->repository->setSearch( $product->getName());
+
+        if ($product->getSlug() !== $slug) {
+            return $this->redirectToRoute('shop/card.html.twig', [
+                'id' => $product->getId(),
+                'setList' => $setList,
+                'slug' => $product->getSlug()
+            ], 301);
+        }
+
+        return $this->render('shop/card.html.twig', [
+            'product' => $product,
+            'setList' => $setList,
+            'slug' => $product->getSlug()
+            ]);
+    }    
 } 

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Stock;
 use App\Entity\Products;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -40,6 +41,7 @@ class CardFixtures extends Fixture
                             ->setAttribute($card->attribute);
                 }
                 $manager->persist($product);
+
                 }
             }else{
                 $product = new Products();
@@ -59,6 +61,17 @@ class CardFixtures extends Fixture
                 }
                 $manager->persist($product);
             }
+
+            $stock = new Stock();
+
+            $stock->setCardId($product)
+                ->setStockType('Française')
+                ->setNew(3)
+                ->setCorrect(3)
+                ->setOccasion(3)
+                ->setAbimee(3);
+
+            $manager->persist($stock);
         }
 
         $manager->flush();

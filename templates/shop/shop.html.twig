@@ -87,10 +87,10 @@
 										{% if product.imgSmall is not null %}
 											<img src="{{product.imgSmall}}" alt="{{product.name}}">
 										{% else %}
-										<img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
+											<img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
 										{% endif %}
 										<div class="pi-links">
-											<a href="#" class="add-card"><i class="flaticon-bag"></i><span>AJOUTER AU PANIER</span></a>
+											<a href="{{ path('card', {slug: product.slug, id: product.id}) }}" class="add-card"><i class="flaticon-bag"></i><span>AJOUTER AU PANIER</span></a>
 											<a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
 										</div>
 									</div>
@@ -102,7 +102,7 @@
 							</div>
 						{% endfor %}
 						<div class="text-center w-100 pt-3">
-							<button class="site-btn sb-line sb-dark">LOAD MORE</button>
+							{{ knp_pagination_render(products) }}
 						</div>
 					</div>
 				</div>

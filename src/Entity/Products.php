@@ -57,17 +57,17 @@ class Products
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $set_name;
+    private $setName;
 
         /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $set_code;
+    private $setCode;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $set_rarity;
+    private $setRarity;
 
     /**
      * @ORM\Column(type="float", options={"default": 0}, nullable=true)
@@ -178,17 +178,17 @@ class Products
      */
     public function getDescription()
     {
-        return $this->desc;
+        return $this->description;
     }
 
     /**
-     * @param mixed $desc
+     * @param mixed $description
      *
      * @return self
      */
-    public function setDescription($desc)
+    public function setDescription($description)
     {
-        $this->desc = $desc;
+        $this->description = $description;
 
         return $this;
     }
@@ -298,17 +298,17 @@ class Products
      */
     public function getSetName()
     {
-        return $this->set_name;
+        return $this->setName;
     }
 
     /**
-     * @param mixed $set_name
+     * @param mixed $setName
      *
      * @return self
      */
-    public function setSetName($set_name)
+    public function setSetName($setName)
     {
-        $this->set_name = $set_name;
+        $this->setName = $setName;
 
         return $this;
     }
@@ -318,17 +318,17 @@ class Products
      */
     public function getSetCode()
     {
-        return $this->set_code;
+        return $this->setCode;
     }
 
     /**
-     * @param mixed $set_code
+     * @param mixed $setCode
      *
      * @return self
      */
-    public function setSetCode($set_code)
+    public function setSetCode($setCode)
     {
-        $this->set_code = $set_code;
+        $this->setCode = $setCode;
 
         return $this;
     }
@@ -338,17 +338,17 @@ class Products
      */
     public function getSetRarity()
     {
-        return $this->set_rarity;
+        return $this->setRarity;
     }
 
     /**
-     * @param mixed $set_rarity
+     * @param mixed $setRarity
      *
      * @return self
      */
-    public function setSetRarity($set_rarity)
+    public function setSetRarity($setRarity)
     {
-        $this->set_rarity = $set_rarity;
+        $this->setRarity = $setRarity;
 
         return $this;
     }

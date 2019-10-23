@@ -2,10 +2,11 @@
 
 namespace App\Repository;
 
-use App\Entity\Products;
 use App\Entity\Stock;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use App\Entity\Products;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 // use Doctrine\ORM\Query\Expr\Comparison;
 // use Doctrine\Common\Collections\Expr\Comparison;
 
@@ -29,7 +30,7 @@ class ProductsRepository extends ServiceEntityRepository
     public function set_codes()
     {
         return $this->createQueryBuilder('p')
-            ->select('SUBSTRING(p.set_code, 1,4) AS set, COUNT(p.id) AS totalCard')
+            ->select('SUBSTRING(p.setCode, 1,4) AS set, COUNT(p.id) AS totalCard')
             ->groupBy('set')
             ->getQuery()
             ->getResult()
@@ -54,14 +55,28 @@ class ProductsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Products[] Returns an array of Products objects
+     * @return Query
      */
-    public function findAllGrouped()
+    public function findAllGrouped(): Query
     {
         return $this->createQueryBuilder('p')
-            ->groupBy('p.name')
+            // ->groupBy('p.name')
+            ->orderBy('p.setCode')
             ->getQuery()
-            ->getResult()
+        ;
+    }
+
+    /**
+     * @return Products[] Returns an array of Products objects
+     */
+    public function setSearch($value)
+    {
+        return $this->createQueryBuilder('p')
+                    ->select('p.setCode, p.setName, p.id, p.name')
+                    ->where('p.name = :val')
+                    ->setParameter('val', $value)
+                    ->getQuery()
+                    ->getResult()
         ;
     }
     
