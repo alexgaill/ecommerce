@@ -22,7 +22,9 @@ class BasketController extends AbstractController
     {
         $panier = $session->get('panier');
         dump($panier);
-        return $this->render('basket/index.html.twig');
+        return $this->render('basket/index.html.twig',[
+            'panier' => $panier
+        ]);
     }
 
     /** 
@@ -34,6 +36,7 @@ class BasketController extends AbstractController
         
         $panier = $session->get('panier', []);
         $panier[$id] = [
+            'id' => $id,
             'new' => $form->get('new'),
             'correct' => $form->get('correct'),
             'occasion' => $form->get('occasion'),

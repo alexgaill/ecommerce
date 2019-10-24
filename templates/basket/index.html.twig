@@ -3,5 +3,11 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
+<table class="table">
+    {% for product in panier %}
+        <tr>
+            <td>{{product.new}}</td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}

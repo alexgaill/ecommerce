@@ -53,7 +53,7 @@
                                 {% endif %}
                                         <td>{{eachSet.setName}}</td>
                                         <td>{{eachSet.setCode}}</td>
-                                        <td><a href="{{ path('card', {slug: product.slug, id: product.id}) }}">Voir</a></td> 
+                                        <td><a href="{{ path('card', {slug: product.slug, id: eachSet.id}) }}">Voir</a></td> 
                                     </tr>
                             {% endfor %}
                         </tbody>
