@@ -1,0 +1,180 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container spad">
+        <div class="row spad">
+            <div class="col-6 border-right">
+                <div class="row">
+                    <div class="col-6">
+                        {% if product.imgSmall is not null %}
+                            <img src="{{product.imgSmall}}" alt="{{product.name}}">
+                        {% else %}
+                            <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
+                        {% endif %}
+                    </div>
+                    <div class="col-6">
+                        <div class="column">
+                            <h4 class="mb-2">{{product.name}}</h4>
+                            <p class="mb-4">{{product.setCode}}</p>
+                            <div class="row d-flex justify-content-around text-body">
+                                <p>{{product.type}}</p>
+                                {% if product.race is not null %}
+                                    <p>{{product.race}}</p>
+                                {% endif %}
+                            </div>
+                            {% if product.atk is not null %}
+                                <div class="row d-flex justify-content-around text-body">
+                                    <p>ATK: {{product.atk}}</p>
+                                    <p>DEF: {{product.def}}</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <div class="col-10">
+                <div class="container">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>Autres sets contenant cette carte</tr>
+                            <tr>
+                                <th>Nom du set</th>
+                                <th>Code</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for eachSet in setList %}
+                                {% if eachSet.setCode == product.setCode %}
+                                    <tr class="bg-info">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+                                        <td>{{eachSet.setName}}</td>
+                                        <td>{{eachSet.setCode}}</td>
+                                        <td><a href="{{ path('card', {slug: product.slug, id: product.id}) }}">Voir</a></td> 
+                                    </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="spad">
+            <form action="{{ path('basket_add', {id: product.id}) }}" method="post">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Type de carte</th>
+                            <th>Etat</th>
+                            <th>Disponibilité</th>
+                            <th>Prix Unitaire</th>
+                            <th>Quantité</th>
+                            <th>Prix total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stock in product.stocksList %}
+                            <tr>
+                                <td rowspan="5">{{stock.stockType}}</td>
+                            </tr>
+                            <tr>
+                                <td>Neuve</td>
+                                {% if stock.new > 2 %}
+                                    <td class="text-success">En stock</td>
+                                {% elseif stock.new > 0 %}
+                                    <td class="text-warning">Stock faible</td>
+                                {% else %}
+                                    <td class="text-danger">Indisponible</td>
+                                {% endif %}
+                                <td>{{product.price}}</td>
+                                <td>
+                                    <select name="new" id="quantity">
+                                        {% for qty in 0 .. stock.new %}
+                                            <option value="{{qty}}">{{qty}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><span id="totalNew">0.00</span> €</td>
+                            </tr>
+                            <tr>
+                                <td>Correcte</td>
+                                {% if stock.correct > 2 %}
+                                    <td class="text-success">En stock</td>
+                                {% elseif stock.correct > 0 %}
+                                    <td class="text-warning">Stock faible</td>
+                                {% else %}
+                                    <td class="text-danger">Indisponible</td>
+                                {% endif %}
+                                <td>{{product.price}}</td>
+                                <td>
+                                    <select name="correct" id="quantity">
+                                        {% for qty in 0 .. stock.correct %}
+                                            <option value="{{qty}}">{{qty}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><span id="totalCorrect">0.00</span> €</td>
+                            </tr>
+                            <tr>
+                                <td>Occasion</td>
+                                {% if stock.occasion > 2 %}
+                                    <td class="text-success">En stock</td>
+                                {% elseif stock.occasion > 0 %}
+                                    <td class="text-warning">Stock faible</td>
+                                {% else %}
+                                    <td class="text-danger">Indisponible</td>
+                                {% endif %}
+                                <td>{{product.price}}</td>
+                                <td>
+                                    <select name="occasion" id="quantity">
+                                        {% for qty in 0 .. stock.occasion %}
+                                            <option value="{{qty}}">{{qty}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><span id="totalOccasion">0.00</span> €</td>
+                            </tr>
+                            <tr>
+                                <td>Abimee</td>
+                                {% if stock.new > 2 %}
+                                    <td class="text-success">En stock</td>
+                                {% elseif stock.abimee > 0 %}
+                                    <td class="text-warning">Stock faible</td>
+                                {% else %}
+                                    <td class="text-danger">Indisponible</td>
+                                {% endif %}
+                                <td>{{product.price}}</td>
+                                <td>
+                                    <select name="abimee" id="quantity">
+                                        {% for qty in 0 .. stock.abimee %}
+                                            <option value="{{qty}}">{{qty}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><span id="totalAbimee">0.00</span> €</td>
+                            </tr>
+                        {% endfor %} 
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-right" colspan="4">Total HT: </td>
+                            <td><span id="totalHT">0.00</span> €</td>
+                        </tr>
+                        <tr>
+                                <td class="text-right" colspan="4">TVA: </td>
+                                <td><span id="totalHT">0.00</span> €</td>
+                        </tr>
+                        <tr>
+                                <td class="text-right" colspan="4">Total TTC: </td>
+                                <td><span id="totalHT">0.00</span> €</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <button class="btn btn-primary">Ajouter au panier</button>
+            </form>
+        </div>
+    </div>  
+{% endblock %}
