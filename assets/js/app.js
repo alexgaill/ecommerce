@@ -10,9 +10,9 @@
     import '../css/app.css';
     import '../css/bootstrap.min.css';
     import '../css/flaticon.css';
-    import '../css/font-awesome.min.css';
-    import '../css/jquery-ui.min.css';
-    import '../css/owl-carousel.min.css';
+    // import '../css/font-awesome.min.css';
+    // import '../css/jquery-ui.min.css';
+    // import '../css/owl.carousel.min.css';
     import '../css/slicknav.min.css';
     import '../css/style.css';
 

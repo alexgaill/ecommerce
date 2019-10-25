@@ -25,7 +25,7 @@ Encore
      */
     // .addEntry('jquery', './assets/js/jquery-3.2.1.min.js')
     .addEntry('app', './assets/js/app.js')
-    .addEntry('bootstrap', './assets/js/bootstrap.min.js')
+    // .addEntry('bootstrap', './assets/js/bootstrap.min.js')
     .addEntry('jquery-ui', './assets/js/jquery-ui.min.js')
     .addEntry('nicescroll', './assets/js/jquery.nicescroll.min.js')
     .addEntry('slicknav', './assets/js/jquery.slicknav.min.js')

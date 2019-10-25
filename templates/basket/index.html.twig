@@ -3,11 +3,68 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<table class="table">
-    {% for product in panier %}
-        <tr>
-            <td>{{product.new}}</td>
-        </tr>
-    {% endfor %}
-</table>
+    <div class="page-top-info">
+		<div class="container">
+			<h4>Panier</h4>
+		</div>
+	</div>
+<section class="cart-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="cart-table">
+						<h3>Your Cart</h3>
+						<div class="cart-table-warp">
+							<table>
+							<thead>
+								<tr>
+									<th class="product-th">Product</th>
+									<th class="quy-th">Quantity</th>
+									<th class="size-th">SizeSize</th>
+									<th class="total-th">Price</th>
+								</tr>
+							</thead>
+							<tbody>
+                                {% for product in panier %}
+                                    <tr>
+									<td class="product-col">
+										{% if product.imgSmall is not null %}
+                                            <img src="{{product.imgSmall}}" alt="{{product.name}}">
+                                        {% else %}
+                                            <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
+                                        {% endif %}
+										<div class="pc-title">
+											<h4>{{product.name}}</h4>
+											<p>{{product.price}}</p>
+										</div>
+									</td>
+									<td class="quy-col">
+										<div class="quantity">
+												<p>{{product.new}}</p>
+                    					</div>
+									</td>
+									<td class="size-col"><h4>Size M</h4></td>
+									<td class="total-col"><h4>{{product.totalNew}}</h4></td>
+								</tr>
+                                {% endfor %}
+								
+							</tbody>
+						</table>
+						</div>
+						<div class="total-cost">
+							<h6>Total <span>$99.90</span></h6>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 card-right">
+					<form class="promo-code-form">
+						<input type="text" placeholder="Entrez un code promo">
+						<button>Submit</button>
+					</form>
+					<a href="" class="site-btn btn-primary">Payer</a>
+					<a href="{{ path('shop') }}" class="site-btn sb-dark">Continuer mes achats</a>
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}

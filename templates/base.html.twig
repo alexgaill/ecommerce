@@ -41,8 +41,9 @@
 							</div>
 							<div class="up-item">
 								<div class="shopping-card">
+								{% set countProducts = app.session.get('panier') | length %}
 									<i class="flaticon-bag"></i>
-									<span>0</span>
+									<span>{{ countProducts }}</span>
 								</div>
 								<a href="{{ path('basket') }}">Panier</a>
 							</div>
