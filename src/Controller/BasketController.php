@@ -53,7 +53,7 @@ class BasketController extends AbstractController
             'totalNew' => $price * intval($form->get('new')),
             'totalCorrect' => $price * intval($form->get('correct')) * 0.9,
             'totalOccasion' => $price * intval($form->get('occasion')) * 0.8,
-            'totalAbimee' => $price * intval($form->get('new')) * 0.6
+            'totalAbimee' => $price * intval($form->get('abimee')) * 0.6
         ];
         dump($product);
         $session->set('panier', $panier);

@@ -13,46 +13,88 @@
 			<div class="row">
 				<div class="col-lg-8">
 					<div class="cart-table">
-						<h3>Your Cart</h3>
+						<h3>Votre panier</h3>
 						<div class="cart-table-warp">
 							<table>
 							<thead>
 								<tr>
-									<th class="product-th">Product</th>
-									<th class="quy-th">Quantity</th>
-									<th class="size-th">SizeSize</th>
-									<th class="total-th">Price</th>
+									<th class="product-th" scope="col">Carte</th>
+                                    <th class="quy-th" scope="col">Etat</th>
+									<th class="quy-th" scope="col">Prix unitaire</th>
+                                    <th class="quy-th" scope="col">Quantité</th>
+                                    <th class="quy-th" scope="col">Prix total</th>
 								</tr>
 							</thead>
 							<tbody>
                                 {% for product in panier %}
                                     <tr>
-									<td class="product-col">
-										{% if product.imgSmall is not null %}
-                                            <img src="{{product.imgSmall}}" alt="{{product.name}}">
-                                        {% else %}
-                                            <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
-                                        {% endif %}
-										<div class="pc-title">
-											<h4>{{product.name}}</h4>
-											<p>{{product.price}}</p>
-										</div>
-									</td>
-									<td class="quy-col">
-										<div class="quantity">
-												<p>{{product.new}}</p>
-                    					</div>
-									</td>
-									<td class="size-col"><h4>Size M</h4></td>
-									<td class="total-col"><h4>{{product.totalNew}}</h4></td>
-								</tr>
+                                        <td class="product-col" rowspan="5">
+                                            {% if product.imgSmall is not null %}
+                                                <img src="{{product.imgSmall}}" alt="{{product.name}}">
+                                            {% else %}
+                                                <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
+                                            {% endif %}
+                                            <div class="pc-title">
+                                                <h4>{{product.name}}</h4>
+                                                <p>{{product.price}}</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="size-col"><h4>Neuve</h4></td>
+                                        <td class="total-col">{{ product.price|number_format(2, '.', ',') }}</td>
+                                        <td class="quy-col">
+                                            <div class="quantity">
+                                                    <p>{{ product.new }}</p>
+                                            </div>
+                                        </td>
+                                {% if product.new > 0 %}
+                                        <td class="total-col"><h4>{{product.totalNew|number_format(2, '.', ',')}}</h4></td>
+                                {% endif %}
+                                    </tr>
+                                    <tr>
+                                        <td class="size-col"><h4>Correcte</h4></td>
+                                        <td class="total-col">{{ (product.price * 0.9)|number_format(2, '.', ',')}}</td>
+                                        <td class="quy-col">
+                                            <div class="quantity">
+                                                    <p>{{ product.correct }}</p>
+                                            </div>
+                                        </td>
+                                {% if product.correct > 0 %}
+                                        <td class="total-col"><h4>{{product.totalCorrect|number_format(2, '.', ',')}}</h4></td>
+                                {% endif %}
+                                    </tr>
+                                    <tr>
+                                        <td class="size-col"><h4>Occasion</h4></td>
+                                        <td class="total-col">{{ (product.price * 0.8)|number_format(2, '.', ',') }}</td>
+                                        <td class="quy-col">
+                                            <div class="quantity">
+                                                    <p>{{ product.occasion }}</p>
+                                            </div>
+                                        </td>
+                                {% if product.occasion > 0 %}
+                                        <td class="total-col"><h4>{{product.totalOccasion|number_format(2, '.', ',')}}</h4></td>
+                                {% endif %}
+                                    </tr>
+                                    <tr>
+                                        <td class="size-col"><h4>Abimée</h4></td>
+                                        <td class="total-col">{{ (product.price * 0.6)|number_format(2, '.', ',') }}</td>
+                                        <td class="quy-col">
+                                            <div class="quantity">
+                                                    <p>{{ product.occasion }}</p>
+                                            </div>
+                                        </td>
+                                {% if product.abimee > 0 %}
+                                        <td class="total-col"><h4>{{product.totalAbimee|number_format(2, '.', ',')}}</h4></td>
+                                {% endif %}
+                                    </tr>
                                 {% endfor %}
 								
 							</tbody>
 						</table>
 						</div>
 						<div class="total-cost">
-							<h6>Total <span>$99.90</span></h6>
+							<h6>Total <span id="totalPanier">0.00 €</span></h6>
 						</div>
 					</div>
 				</div>

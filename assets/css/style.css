@@ -1774,7 +1774,7 @@ ol {
 }
 
 .cart-table .product-col {
-	display: table;
+	/* display: table; */
 	margin-bottom: 19px;
 }
 
