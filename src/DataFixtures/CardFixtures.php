@@ -42,6 +42,17 @@ class CardFixtures extends Fixture
                 }
                 $manager->persist($product);
 
+                $stock = new Stock();
+
+                $stock->setCardId($product)
+                    ->setStockType('Française')
+                    ->setNew(3)
+                    ->setCorrect(3)
+                    ->setOccasion(3)
+                    ->setAbimee(3);
+
+                $manager->persist($stock);
+
                 }
             }else{
                 $product = new Products();
@@ -60,18 +71,20 @@ class CardFixtures extends Fixture
                             ->setAttribute($card->attribute);
                 }
                 $manager->persist($product);
+
+                
+                $stock = new Stock();
+
+                $stock->setCardId($product)
+                    ->setStockType('Française')
+                    ->setNew(3)
+                    ->setCorrect(3)
+                    ->setOccasion(3)
+                    ->setAbimee(3);
+
+                $manager->persist($stock);
             }
 
-            $stock = new Stock();
-
-            $stock->setCardId($product)
-                ->setStockType('Française')
-                ->setNew(3)
-                ->setCorrect(3)
-                ->setOccasion(3)
-                ->setAbimee(3);
-
-            $manager->persist($stock);
         }
 
         $manager->flush();
