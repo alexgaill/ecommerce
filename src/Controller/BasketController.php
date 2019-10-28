@@ -23,7 +23,6 @@ class BasketController extends AbstractController
     public function index(SessionInterface $session)
     {
         $panier = $session->get('panier');
-        dump($panier);
         return $this->render('basket/index.html.twig',[
             'panier' => $panier
         ]);
@@ -55,9 +54,19 @@ class BasketController extends AbstractController
             'totalOccasion' => $price * intval($form->get('occasion')) * 0.8,
             'totalAbimee' => $price * intval($form->get('abimee')) * 0.6
         ];
-        dump($product);
+        
         $session->set('panier', $panier);
         return $this->redirectToRoute('basket');
+    }
 
+    /** 
+    * @Route("/remove/{id}", name="basket_remove")
+    **/
+    public function removeFromBasket (SessionInterface $session, $id)
+    {
+        $panier = $session->get('panier', []);
+        unset($panier[$id]);
+        $session->set('panier', $panier);
+        return $this->redirectToRoute('basket');
     }
 }

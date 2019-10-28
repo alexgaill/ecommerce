@@ -18,6 +18,7 @@
 							<table>
 							<thead>
 								<tr>
+                                    <th class="product-th" scope="col">#</th>
 									<th class="product-th" scope="col">Carte</th>
                                     <th class="quy-th" scope="col">Etat</th>
 									<th class="quy-th" scope="col">Prix unitaire</th>
@@ -27,6 +28,9 @@
 							</thead>
 							<tbody>
                                 {% for product in panier %}
+                                    <tr>
+                                        <td class="quy-col font-weight-bold" rowspan="6"><a href="{{ path('basket_remove', {id : product.id}) }}"><i class="flaticon-cancel text-danger"></i></a></td>
+                                    </tr>
                                     <tr>
                                         <td class="product-col" rowspan="5">
                                             {% if product.imgSmall is not null %}

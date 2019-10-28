@@ -6,29 +6,32 @@ use App\Entity\User;
 use App\Form\UserType;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
      /**
-     * @Route("../user/login", name="login")
+     * @Route("/user/login", name="login")
      * @return Response
      */
     public function login() : Response
     {
-        $products = $this->repository->findAll();
+        // $products = $this->repository->findAll();
         return $this->render('user/login.html.twig', [
-            'products' => $products
+            // 'products' => $products
         ]);
     }
 
     /**
-     * @Route("../user/signup", name="signup")
+     * @Route("/user/signup", name="signup")
      * @return Response
      */
-    public function signup(User $user, Request $request) : Response
+    public function signup(Request $request, ObjectManager $manager)
     {
+        $user = new User();
+        $this->manager = $manager;
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -39,9 +42,8 @@ class UserController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $products = $this->repository->findAll();
+        // $products = $this->repository->findAll();
         return $this->render('user/signup.html.twig', [
-            'products' => $products,
             'form' => $form->createView()
         ]);
     }
