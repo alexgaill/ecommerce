@@ -37,7 +37,11 @@
 						<div class="user-panel">
 							<div class="up-item">
 								<i class="flaticon-profile"></i>
-								<a href="{{path('login')}}">Connexion</a> ou <a href="{{path('signup')}}">Inscription</a>
+								{% if app.user %}
+									<a href="{{path('logout')}}">Déconnexion</a>
+								{% else %}
+									<a href="{{path('login')}}">Connexion</a> ou <a href="{{path('signup')}}">Inscription</a>
+								{% endif %}
 							</div>
 							<div class="up-item">
 								<div class="shopping-card">

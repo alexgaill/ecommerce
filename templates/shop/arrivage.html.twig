@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="page-top-info">
+        <div class="container">
+        <h4 class="text-center">Dernier arrivage</h4>
+        </div>
+    </div>
+    <div class="container spad">
+        <table class="table table-stripped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" class="align-top">Nom</th>
+                    <th scope="col" class="align-top">Neuve</th>
+                    <th scope="col" class="align-top">Correcte</th>
+                    <th scope="col" class="align-top">Occasion</th>
+                    <th scope="col" class="align-top">Abimée</th>
+                    <th scope="col" class="align-top">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{product.name}}</td>
+                        <td>{{product.new}}</td>
+                        <td>{{product.correct}}</td>
+                        <td>{{product.occasion}}</td>
+                        <td>{{product.abimee}}</td>
+                        <td><a href="{{ path('card', {id: product.id})}}">Voir</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

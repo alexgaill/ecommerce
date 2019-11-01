@@ -25,7 +25,7 @@
                             <tr>
                                 <th scope="row">{{arrivage.createdAt}}</th>
                                 <td>{{arrivage.name}}</td>
-                                <td><a href="#">En savoir plus</a></td>
+                                <td><a href="{{ path('arrivage', {id: arrivage.id})}}">En savoir plus</a></td>
 
                             </tr>
                         {% endfor %}

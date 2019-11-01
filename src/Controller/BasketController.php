@@ -69,4 +69,12 @@ class BasketController extends AbstractController
         $session->set('panier', $panier);
         return $this->redirectToRoute('basket');
     }
+
+    /**
+     * @Route("/validation", name="validation")
+     */
+    public function validation()
+    {
+        return $this->render('basket/validation.html.twig');
+    }
 }

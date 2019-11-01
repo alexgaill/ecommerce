@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="page-top-info">
+        <div class="container">
+        <h4 class="text-center">Validation et paiement</h4>
+        </div>
+    </div>
+    <div class="container spad">
+        {% if app.user %}
+            <h3>Récapitulatif de vos coordonnées</h3>
+        {% endif %}
+    </div>
+{% endblock %}

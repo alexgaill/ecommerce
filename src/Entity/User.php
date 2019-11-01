@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *  fields= {"email"},
+ * message= "Cet email est déjà utilisé."
+ * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -45,6 +52,9 @@ class User
 
     /**
      * @ORM\Column(type="string", length=150)
+     * * @Assert\Email(
+     *     message = "L'email: {{ value }} n'est pas valide.",
+     *     checkMX = true)
      */
     private $email;
 
@@ -57,6 +67,11 @@ class User
      * @ORM\Column(type="string", length=64)
      */
     private $password;
+
+    /**
+    * @Assert\EqualTo(propertyPath="password", message="Attention les mots de passe ne sont pas identiques")
+    */
+    public $password_verify;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -250,4 +265,18 @@ class User
 
         return $this;
     }
+
+    public function createCode($nom, $createdAt)
+    {
+        return hash('sha256', ($nom.$createdAt));
+    }
+
+    public function eraseCredentials() {}
+
+    public function getSalt() {}
+
+    public function getRoles() {
+        return ['ROLE_USER'];
+    }
+    public function getUsername() {}
 }

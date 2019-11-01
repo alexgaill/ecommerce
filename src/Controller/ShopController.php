@@ -56,9 +56,7 @@ class ShopController extends AbstractController
             $request->query->getInt('page', 1),
             24
         );
-        // $products->setCustomParameters([
-        //     'color' => 'black'
-        // ]);
+
         $listStockType = $this->repo->listStockType();
 
         $count=[$this->repository->countCard('new'), 
@@ -109,5 +107,16 @@ class ShopController extends AbstractController
             'setList' => $setList,
             'slug' => $product->getSlug()
             ]);
-    }    
+    }
+
+    /** 
+     * @Route("/arrivage/{id}", name="arrivage")
+     */
+    public function arrivage($id, ArrivageRepository $repository)
+    {
+        $arrivage = $repository->find($id);
+        return $this->render('shop/arrivage.html.twig', [
+            'products' => $arrivage->getEntries()
+        ]);
+    }
 } 

@@ -1,20 +1,52 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-  <div class="container">
-    <h1 class="text-center">Inscription sur le site</h1>
-
-    <form class="container">
-        {{ form_start(form) }}
-        {# <div class="form-group">
-        {{ form_row(form.nom, {'label':'Nom'}) }}
-        </div> #}
+  <div class="page-top-info">
+    <div class="container">
+      <h4 class="text-center">Inscription sur le site</h4>
+    </div>
+  </div>
+  <div class="container spad">
+    {{ form_start(form) }}
+      <div class="container row jumbotron">
+        <div class="col-6 column text-center">
+          <div class="form-group">
+            {{ form_row(form.nom, {'attr': {'placeholder': 'Votre Nom', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.prenom, {'attr': {'placeholder': 'Votre Prenom', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.adresse, {'attr': {'placeholder': 'Adresse', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.code_postal, {'attr': {'placeholder': 'Code Postal', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.ville, {'attr': {'placeholder': 'Ville', 'class' : 'rounded'}}) }}
+          </div>
+        </div>
+        <div class="col-6 column text-center">
+          <div class="form-group">
+            {{ form_row(form.email, {'attr': {'placeholder': 'Email', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.telephone, {'attr': {'placeholder': 'Téléphone', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.password, {'attr': {'placeholder': 'Mot de passe', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            {{ form_row(form.password_verify, {'attr': {'placeholder': 'Validez votre mot de passe', 'class' : 'rounded'}}) }}
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Inscription</button>
+          </div>
+        </div>
         {# {{ form_row(form.email, {'attr': {'placeholder': 'xxxx@xxxx.fr'}}) }} #}
         {# {{ form_row(form.password, {'attr': {'placeholder': '**********'}}) }} #}
         {# {{ form_row(form.confirm_password, {'attr': {'placeholder': '**********'}}) }} #}
-        {{form_rest(form)}}
-        <button type="submit" class="btn btn-success">Inscription!</button>
-        {{ form_end(form) }}
-    </div>
+      </div>
+    {{ form_end(form) }}
   </div>
 {% endblock %}

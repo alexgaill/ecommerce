@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -16,19 +17,16 @@ class UserController extends AbstractController
      * @Route("/user/login", name="login")
      * @return Response
      */
-    public function login() : Response
+    public function login()
     {
-        // $products = $this->repository->findAll();
-        return $this->render('user/login.html.twig', [
-            // 'products' => $products
-        ]);
+		return $this->render('user/login.html.twig');
     }
 
     /**
      * @Route("/user/signup", name="signup")
      * @return Response
      */
-    public function signup(Request $request, ObjectManager $manager)
+    public function signup(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $this->manager = $manager;
@@ -36,15 +34,34 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+
+            $newDate = new \DateTime();
+            $date = $newDate->format('Y-m-d');
+            $code = $user->createCode($user->getNom(), $date);
+
+            $user->setValide(false)
+                ->setCodeValidation($code)
+                ->setCreatedAt($newDate);
+            
             $this->manager->persist($user);
             $this->manager->flush();
-            $this->addFlash("success", "Votre compte est créé avec succès");
             return $this->redirectToRoute('login');
         }
 
-        // $products = $this->repository->findAll();
         return $this->render('user/signup.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/user/logout", name="logout")
+     */
+
+    public function logout()
+    {
+
     }
 }
