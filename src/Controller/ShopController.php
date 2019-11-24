@@ -27,14 +27,11 @@ class ShopController extends AbstractController
      */
     public function index(ArrivageRepository $repository, EntryRepository $repo) : Response
     {
-        $this->repository = $repository;
-        $this->repo = $repo;
+       $arrivage = $repository->findLastTen();
         
-        $arrivage = $this->repository->findLastTen();
-        
-        foreach ($arrivage as $line) {
-            array_push($line, $this->repo->quantity($line->getId()));
-        }
+        // foreach ($arrivage as $line) {
+        //     array_push($line, $repo->quantity($line->getId()));
+        // }
 
         return $this->render('shop/index.html.twig', [
             'arrivages' => $arrivage

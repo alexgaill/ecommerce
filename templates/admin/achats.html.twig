@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-top-info">
+        <div class="container">
+        <h4 class="text-center">Nouvel arrivage</h4>
+        </div>
+    </div>
+    <div class="container spad">
+        <input type="text" name="nomArrivage" id="nomArrivage" placeholder="Nom de l'arrivage" class="mb-5">
+        <div class="row">
+            <div class="col-9">
+                <div class="container">
+                    <table class="table table-hover" id="addCard">
+                        <thead>
+                            <tr>
+                                <th>Nom carte</th>
+                                <th>SetId</th>
+                                <th>Type</th>
+                                <th>New</th>
+                                <th>Correct</th>
+                                <th>Occasion</th>
+                                <th>Abimée</th>
+                                <th>Coût</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>
+                                <datalist name="cardName" class="cardName"></datalist>
+                            </td>
+                            <td><select name="setId" class="setId"></select></td>
+                            <td><input type="text" name="typeEntry" class="typeEntry"></td>
+                            <td><input type="number" name="new" class="new"></td>
+                            <td><input type="number" name="correct" class="correct"></td>
+                            <td><input type="number" name="occasion" class="occasion"></td>
+                            <td><input type="number" name="abimee" class="abimee"></td>
+                            <td class="total"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button><i class="fas fa-cross"></i></button>
+                    <button type="submit">Enregistrer</button>
+                </div>
+            </div>
+            <div class="col-3">
+            <p>USer</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

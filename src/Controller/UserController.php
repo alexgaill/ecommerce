@@ -11,10 +11,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @Route("/user")
+ */
 class UserController extends AbstractController
 {
      /**
-     * @Route("/user/login", name="login")
+     * @Route("/login", name="login")
      * @return Response
      */
     public function login()
@@ -23,7 +26,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/signup", name="signup")
+     * @Route("/signup", name="signup")
      * @return Response
      */
     public function signup(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
@@ -57,10 +60,17 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/logout", name="logout")
+     * @Route("/logout", name="logout")
      */
-
     public function logout()
+    {
+
+    }
+
+    /**
+     * @Route("/account", name="account")
+     */
+    public function account()
     {
 
     }

@@ -25,6 +25,7 @@ class ArrivageRepository extends ServiceEntityRepository
     public function findLastTen()
     {
         return $this->createQueryBuilder('a')
+            ->select('a.id, a.createdAt, a.name')
             ->andWhere("a.type = 'achat'")
             ->orderBy('a.id', 'DESC')
             ->setMaxResults(10)

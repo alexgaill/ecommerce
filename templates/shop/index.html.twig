@@ -23,7 +23,7 @@
                     <tbody>
                         {% for arrivage in arrivages %}
                             <tr>
-                                <th scope="row">{{arrivage.createdAt}}</th>
+                                <th scope="row">{{arrivage.createdAt | date('d/m/Y')}}</th>
                                 <td>{{arrivage.name}}</td>
                                 <td><a href="{{ path('arrivage', {id: arrivage.id})}}">En savoir plus</a></td>
 

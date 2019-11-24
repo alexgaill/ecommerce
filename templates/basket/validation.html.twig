@@ -9,6 +9,18 @@
     <div class="container spad">
         {% if app.user %}
             <h3>Récapitulatif de vos coordonnées</h3>
+        
+        {% else %}
+            <div class="row justify-content-around">
+                <div class="">
+                    <h4>Vous avez un compte ?</h4>
+                    <a class="spad" href="{{ path('login') }}"><button class="btn btn-primary">Connectez-vous</button></a>
+                </div>
+                <div class="">
+                    <h4>Vous n'êtes pas encore inscrit ?</h4>
+                    <a href="{{ path('signup') }}"><button class="btn btn-primary">Inscription</button></a>
+                </div>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
