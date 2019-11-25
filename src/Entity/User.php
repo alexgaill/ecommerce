@@ -276,7 +276,7 @@ class User implements UserInterface
     public function getSalt() {}
 
     public function getRoles() {
-        if ($this->id == 1) {
+        if ($this->id == 6) {
             return ['ROLE_ADMIN'];
         } else {
             return ['ROLE_USER'];

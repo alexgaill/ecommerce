@@ -29,6 +29,8 @@ Encore
     .addEntry('jquery-ui', './assets/js/jquery-ui.min.js')
     .addEntry('nicescroll', './assets/js/jquery.nicescroll.min.js')
     .addEntry('slicknav', './assets/js/jquery.slicknav.min.js')
+    .addEntry('basket', './assets/js/basket.js')
+    .addEntry('arrivage', './assets/js/arrivage.js')
     .addEntry('owlcarousel', './assets/js/owl.carousel.min.js')
     .addEntry('zoom', './assets/js/jquery.zoom.min.js')
     .addEntry('main', './assets/js/main.js')
