@@ -60,7 +60,6 @@ class ProductsRepository extends ServiceEntityRepository
     public function findAllGrouped(): Query
     {
         return $this->createQueryBuilder('p')
-            // ->groupBy('p.name')
             ->orderBy('p.setCode')
             ->getQuery()
         ;
