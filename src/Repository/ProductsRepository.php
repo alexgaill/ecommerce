@@ -66,6 +66,19 @@ class ProductsRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Query
+     */
+    public function findAllName()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id, p.name')
+            ->groupBy('p.name')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
      * @return Products[] Returns an array of Products objects
      */
     public function setSearch($value)

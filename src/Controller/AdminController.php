@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Products;
 use App\Repository\ProductsRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
      * @Route("/admin")
@@ -31,13 +34,13 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/getCards, name="get_cards")
+     * @Route("/getCards", name="get_cards")
      */
-    public function getCards(ProductsRepository $repository, Serializer $serialize)
+    public function getCards(ProductsRepository $repository, SerializerInterface $serialize)
     {
-        $cards = $repository->findAll();
-        $json = $serialize->serialize($cards, 'json');
+        $cards = $repository->findAllName();
+        $response = new JsonResponse($cards);
 
-        return $json;
+        return $response;
     }
 }

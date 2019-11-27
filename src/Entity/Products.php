@@ -114,15 +114,15 @@ class Products
      return (new Slugify())->slugify($this->name);
     }
 
-    public function getTypeType(): string
-    {
-        return self::TYPE[$this->type];
-    }
+    // public function getTypeType(): string
+    // {
+    //     return self::TYPE[$this->type];
+    // }
 
-    public function getRarityType(): string
-    {
-        return self::RARITY[$this->rarity];
-    }
+    // public function getRarityType(): string
+    // {
+    //     return self::RARITY[$this->rarity];
+    // }
 
     public function getFormattedCost(): string {
         return number_format($this->cost, 2, ',', ' ');
