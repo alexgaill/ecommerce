@@ -7,70 +7,66 @@
         </div>
     </div>
     <div class="spad">
-        <div class="container">
-            <div class="row justify-content-between mb-5">
-                <input type="text" name="nomArrivage" id="nomArrivage" placeholder="Nom de l'arrivage">
+        <div class="container mb-5">
+            <div>
                 <select>
                     <option value="1">1</option>
                 </select>
             </div>
+            <p>USer</p>
         </div>
-        <div class="row">
-            <div class="col-6 container">
-                    <table class="table table-hover table-sm" id="addCard">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nom carte</th>
-                                <th scope="col">SetId</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">New</th>
-                                <th scope="col">Correct</th>
-                                <th scope="col">Occasion</th>
-                                <th scope="col">Abimée</th>
-                                <th scope="col">Coût</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="ajout0">
-                                <td class="cardName">
-                                    <select name="cardName">
-                                        <option value="nom">nom</option>
-                                    </select>
-                                </td>
-                                <td><select name="setId" class="setId"></select></td>
-                                <td><input type="text" name="typeEntry" class="typeEntry"></td>
-                                <td><input type="number" name="new" class="new"></td>
-                                <td><input type="number" name="correct" class="correct"></td>
-                                <td><input type="number" name="occasion" class="occasion"></td>
-                                <td><input type="number" name="abimee" class="abimee"></td>
-                                <td class="total"></td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="8" class="text-right">
-                                    <button class="btn-success rounded" id="addMore"><i class="flaticon-add"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">Total HT</td>
-                                <td colspan="2"><span>0.00</span> €</td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">TVA 20%</td>
-                                <td colspan="2"><span>0.00</span> €</td>
-                            </tr>
-                            <tr>
-                                <td colspan="6">Total TTC</td>
-                                <td colspan="2"><span>0.00</span> €</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <button type="submit" class="btn-primary rounded">Enregistrer</button>
-            </div>
-            <div class="col-3">
-                <p>USer</p>
-            </div>
+        <div class="col-6">
+            <input type="text" name="nomArrivage" id="nomArrivage" placeholder="Nom de l'arrivage" class="mb-5">
+            <table class="table table-hover table-sm" id="addCard">
+                <thead>
+                    <tr>
+                        <th scope="col">Nom carte</th>
+                        <th scope="col">SetId</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">New</th>
+                        <th scope="col">Correct</th>
+                        <th scope="col">Occasion</th>
+                        <th scope="col">Abimée</th>
+                        <th scope="col">Coût</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# <tr class="ajout0">
+                        <td class="cardName">
+                            <select name="cardName">
+                                <option value="nom">nom</option>
+                            </select>
+                        </td>
+                        <td><select name="setId" class="setId"></select></td>
+                        <td><input type="text" name="typeEntry" class="typeEntry"></td>
+                        <td><input type="number" name="new" class="new"></td>
+                        <td><input type="number" name="correct" class="correct"></td>
+                        <td><input type="number" name="occasion" class="occasion"></td>
+                        <td><input type="number" name="abimee" class="abimee"></td>
+                        <td class="total"></td>
+                    </tr> #}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8" class="text-right">
+                            <button class="btn-success rounded" id="addMore"><i class="flaticon-add"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">Total HT</td>
+                        <td colspan="2"><span>0.00</span> €</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">TVA 20%</td>
+                        <td colspan="2"><span>0.00</span> €</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">Total TTC</td>
+                        <td colspan="2"><span>0.00</span> €</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <button type="submit" class="btn-primary rounded">Enregistrer</button>
         </div>
     </div>
 {% endblock %}

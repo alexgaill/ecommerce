@@ -1,9 +1,8 @@
 let i = 1;
 
 function getCards(datas, elem) {
-    console.log(elem)
     for ( let data of datas) {
-        // elem.append('<option value="' + data.id + '">' + data.name + '</option>')
+        elem.append('<option value="' + data.id + '">' + data.name + '</option>')
     }
 }
 
@@ -18,13 +17,15 @@ $("#addMore").click(function(){
     $("."+ i).append('<td><input type="number" name="abimee" class="abimee"></td>')
     $("."+ i).append('<td class="total"></td>')
 
+    let select = $("."+ i + " .cardName select")
+
     $.ajax({
         url:"./getCards",
         method:"GET",
         dataType:"json",
     })
     .done(function(datas){
-        getCards(datas, $("."+ i + " .cardName select"))
+        getCards(datas, select)
     })
 
     return i ++
