@@ -8,6 +8,7 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -35,10 +36,23 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/getCards", name="get_cards")
+     * @Method("GET")
      */
-    public function getCards(ProductsRepository $repository, SerializerInterface $serialize)
+    public function getCards(ProductsRepository $repository)
     {
         $cards = $repository->findAllName();
+        $response = new JsonResponse($cards);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/getSetCode/{id}", name="get_setCode")
+     * @Method("GET")
+     */
+    public function getSetCode(ProductsRepository $repository, $name)
+    {
+        $cards = $repository->findSetCodes($name);
         $response = new JsonResponse($cards);
 
         return $response;

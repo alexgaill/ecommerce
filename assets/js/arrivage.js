@@ -2,22 +2,22 @@ let i = 1;
 
 function getCards(datas, elem) {
     for ( let data of datas) {
-        elem.append('<option value="' + data.id + '">' + data.name + '</option>')
+        elem.append('<option>' + data.name +' - '+ data.setCode+ '</option>')
     }
 }
 
 $("#addMore").click(function(){
     $("tbody").append("<tr class='ajout "+ i +"'></tr>")
-    $("."+ i).append('<td class="cardName"><select name="cardName"></select></td>')
-    $("."+ i).append('<td><select name="setId" class="setId"></select></td>')
-    $("."+ i).append('<td><input type="text" name="typeEntry" class="typeEntry"></td>')
-    $("."+ i).append('<td><input type="number" name="new" class="new"></td>')
-    $("."+ i).append('<td><input type="number" name="correct" class="correct"></td>')
-    $("."+ i).append('<td><input type="number" name="occasion" class="occasion"></td>')
-    $("."+ i).append('<td><input type="number" name="abimee" class="abimee"></td>')
+    $("."+ i).append('<td class="cardName"><input list="cardName'+ i +'" name="cardName"><datalist id="cardName'+ i +'"></datalist></td>')
+    $("."+ i).append('<td><input type="text" name="typeEntry" class="typeEntry col-lg-auto"></td>')
+    $("."+ i).append('<td><input type="number" name="new" class="new col-lg-auto"></td>')
+    $("."+ i).append('<td><input type="number" name="correct" class="correct col-sm-auto"></td>')
+    $("."+ i).append('<td><input type="number" name="occasion" class="occasion col-xl"></td>')
+    $("."+ i).append('<td><input type="number" name="abimee" class="abimee col-xl"></td>')
     $("."+ i).append('<td class="total"></td>')
 
-    let select = $("."+ i + " .cardName select")
+    let selectCardName = $("."+ i + " .cardName datalist")
+    let selectSetCode = $("." + i + " .setId")
 
     $.ajax({
         url:"./getCards",
@@ -25,7 +25,7 @@ $("#addMore").click(function(){
         dataType:"json",
     })
     .done(function(datas){
-        getCards(datas, select)
+        getCards(datas, selectCardName)
     })
 
     return i ++
