@@ -7,16 +7,56 @@
         </div>
     </div>
     <div class="spad">
-        <div class="container mb-5">
-            <div>
-                <select>
-                    <option value="1">1</option>
-                </select>
+        <div class="container mb-5 border border-dark rounded">
+            <div class="container mb-5 mt-3 form-group">
+            <label for="sellerId">Choisir client: </label>
+                <input list="users" name="users" id="sellerId">
+                <datalist id="users">
+                    {% for user in users %}
+                        <option value="{{ user.id }}">{{ user.nom }} {{ user.prenom }}</option>
+                    {% endfor %}
+                </datalist>
             </div>
-            <p>USer</p>
+            <div class="row justify-content-around">
+                <div class="column text-right">
+                    <div class="form-group">
+                        <label for="nomClient">Nom: </label>
+                        <input type="text" name="nomClient" id="nomClient">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenomClient">Prenom: </label>
+                        <input type="text" name="prenomClient" id="prenomClient">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Telephone: </label>
+                        <input type="text" name="telephone" id="telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="mail">Email: </label>
+                        <input type="mail" name="email" id="mail">
+                    </div>
+                </div>
+                <div class="column text-right">
+                    <div class="form-group">
+                        <label for="adresse">Adresse: </label>
+                        <input type="text" name="adresse" id="adresse">
+                    </div>
+                    <div class="form-group">
+                        <label for="codePostal">Code postal: </label>
+                        <input type="text" name="codePostal" id="codePostal">
+                    </div>
+                    <div class="form-group">
+                        <label for="ville">Ville: </label>
+                        <input type="text" name="ville" id="ville">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-6">
-            <input type="text" name="nomArrivage" id="nomArrivage" placeholder="Nom de l'arrivage" class="mb-5">
+        <div class="container border border-dark rounded">
+            <div class="form-group mb-5 mt-3">
+                <label for="nomArrivage"> Nom de l'arrivage</label>
+                <input type="text" name="nomArrivage">
+            </div>
             <table class="table table-hover table-sm" id="addCard">
                 <thead>
                     <tr>
@@ -26,28 +66,15 @@
                         <th scope="col">Correct</th>
                         <th scope="col">Occasion</th>
                         <th scope="col">Abimée</th>
+                        <th scope="col">Achat</th>
                         <th scope="col">Coût</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {# <tr class="ajout0">
-                        <td class="cardName">
-                            <select name="cardName">
-                                <option value="nom">nom</option>
-                            </select>
-                        </td>
-                        <td><select name="setId" class="setId"></select></td>
-                        <td><input type="text" name="typeEntry" class="typeEntry"></td>
-                        <td><input type="number" name="new" class="new"></td>
-                        <td><input type="number" name="correct" class="correct"></td>
-                        <td><input type="number" name="occasion" class="occasion"></td>
-                        <td><input type="number" name="abimee" class="abimee"></td>
-                        <td class="total"></td>
-                    </tr> #}
                 </tbody>
-                <tfoot>
+                <tfoot  class="text-right">
                     <tr>
-                        <td colspan="8" class="text-right">
+                        <td colspan="8">
                             <button class="btn-success rounded" id="addMore"><i class="flaticon-add"></i></button>
                         </td>
                     </tr>
@@ -56,7 +83,7 @@
                         <td colspan="2"><span>0.00</span> €</td>
                     </tr>
                     <tr>
-                        <td colspan="6">TVA 20%</td>
+                        <td colspan="6">TVA 0%</td>
                         <td colspan="2"><span>0.00</span> €</td>
                     </tr>
                     <tr>
@@ -65,7 +92,7 @@
                     </tr>
                 </tfoot>
             </table>
-            <button type="submit" class="btn-primary rounded">Enregistrer</button>
+            <button type="submit" class="btn-primary rounded mb-5">Enregistrer</button>
         </div>
     </div>
 {% endblock %}

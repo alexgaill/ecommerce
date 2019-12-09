@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Products;
+
 use App\Repository\ProductsRepository;
-use Symfony\Component\Serializer\Serializer;
+use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -29,9 +28,22 @@ class AdminController extends AbstractController
     /**
      * @Route("/achats", name="achats")
      */
-    public function achats()
+    public function achats(UserRepository $repository)
     {
-        return $this->render('admin/achats.html.twig');
+        $users = $repository->findAll();
+        return $this->render('admin/achats.html.twig',[
+            'users' => $users
+        ]);
+    }
+
+    /**
+     * @Route("/getSeller/{id}", name="get_seller")
+     */
+    public function getSeller(UserRepository $repository, $id)
+    {
+        $user = $repository->findSeller($id);
+
+        return new JsonResponse($user);
     }
 
     /**
@@ -47,12 +59,12 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/getSetCode/{id}", name="get_setCode")
+     * @Route("/getCost/{setCode}", name="get_cost")
      * @Method("GET")
      */
-    public function getSetCode(ProductsRepository $repository, $name)
+    public function getSetCode(ProductsRepository $repository, $setCode)
     {
-        $cards = $repository->findSetCodes($name);
+        $cards = $repository->findCost($setCode);
         $response = new JsonResponse($cards);
 
         return $response;

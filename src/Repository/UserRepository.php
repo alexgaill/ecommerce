@@ -19,6 +19,16 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findSeller ($value){
+        return $this->createQueryBuilder('u')
+                    ->select('u.nom, u.prenom, u.email, u.telephone, u.adresse, u.code_postal, u.ville')
+                    ->where('u.id = :val')
+                    ->setParameter('val', $value)
+                    ->getQuery()
+                    ->getOneOrNullResult()
+        ; 
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

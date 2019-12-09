@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use App\Entity\Stock;
 use Doctrine\ORM\Query;
 use App\Entity\Products;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -89,6 +88,21 @@ class ProductsRepository extends ServiceEntityRepository
                     ->setParameter('val', $value)
                     ->getQuery()
                     ->getResult()
+        ;
+    }
+
+    /**
+     * @return Products[]
+     */
+
+    public function findCost($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.cost')
+            ->where('p.setCode = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
         ;
     }
     
