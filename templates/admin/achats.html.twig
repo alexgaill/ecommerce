@@ -55,7 +55,7 @@
         <div class="container border border-dark rounded">
             <div class="form-group mb-5 mt-3">
                 <label for="nomArrivage"> Nom de l'arrivage</label>
-                <input type="text" name="nomArrivage">
+                <input type="text" name="nomArrivage" id="nomArrivage">
             </div>
             <table class="table table-hover table-sm" id="addCard">
                 <thead>
@@ -80,7 +80,7 @@
                     </tr>
                     <tr>
                         <td colspan="6">Total HT</td>
-                        <td colspan="2"><span>0.00</span> €</td>
+                        <td colspan="2"><span id="totalHT">0.00</span> €</td>
                     </tr>
                     <tr>
                         <td colspan="6">TVA 0%</td>
@@ -88,11 +88,11 @@
                     </tr>
                     <tr>
                         <td colspan="6">Total TTC</td>
-                        <td colspan="2"><span>0.00</span> €</td>
+                        <td colspan="2"><span id="totalTTC">0.00</span> €</td>
                     </tr>
                 </tfoot>
             </table>
-            <button type="submit" class="btn-primary rounded mb-5">Enregistrer</button>
+            <button id="enregistrer" class="btn-primary rounded mb-5">Enregistrer</button>
         </div>
     </div>
 {% endblock %}

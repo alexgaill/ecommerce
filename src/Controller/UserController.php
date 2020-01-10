@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -29,7 +29,7 @@ class UserController extends AbstractController
      * @Route("/signup", name="signup")
      * @return Response
      */
-    public function signup(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function signup(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
         $this->manager = $manager;

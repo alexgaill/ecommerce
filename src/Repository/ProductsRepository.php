@@ -105,6 +105,35 @@ class ProductsRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    /**
+     * @return Products[]
+     */
+
+    public function findId($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id')
+            ->where('p.setCode = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @return Query
+     */
+
+    public function findIdQuery($value)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.setCode = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
     
     // /**
     //  * @return Products[] Returns an array of Products objects
