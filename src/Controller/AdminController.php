@@ -161,8 +161,11 @@ class AdminController extends AbstractController
                     ->setOccasion($carte["occasion"])
                     ->setAbimee($carte["abimee"])
                     ->setTotalTTC($carte["totalHT"]);
-
+            
+                    
             $manager->persist($entry);
+            $arrivage->addEntry($entry);
+            $manager->persist($arrivage);
             $manager->flush();
 
             

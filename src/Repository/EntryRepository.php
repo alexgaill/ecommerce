@@ -26,7 +26,7 @@ class EntryRepository extends ServiceEntityRepository
     public function quantity($value)
     {
         return $this->createQueryBuilder('e')
-            ->select("SUM(new) AS new, SUM(correct) AS correct, SUM(occasion) AS occasion, SUM(abimee) AS abimee")
+            ->select("SUM(e.new) AS new, SUM(e.correct) AS correct, SUM(e.occasion) AS occasion, SUM(e.abimee) AS abimee")
             ->andWhere('e.id_arrivage = :val')
             ->setParameter('val', $value)
             ->orderBy('e.id', 'ASC')
@@ -36,6 +36,22 @@ class EntryRepository extends ServiceEntityRepository
         ;
     }
     
+    /**
+     * @return Entry[] Returns an array of Entry objects
+     */
+    
+    public function getEntriesWithName($value)
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.new, e.correct, e.occasion, e.abimee, p.name AS name, p.id, p.setCode AS setCode')
+            ->andWhere('e.id_arrivage = :val')
+            ->setParameter('val', $value)
+            ->join('App\Entity\Stock', 's', 'WITH', 'e.id_stock = s.id')
+            ->join('App\Entity\Products', 'p', 'WITH', 's.card_id = p.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?Entry

@@ -3,7 +3,7 @@
 {% block body %}
     <div class="spad">
         <div class="jumbotron container">
-            <div class="col-8 text-center container">
+            <div class="col-8 text-center">
                 <h2>Nos derniers ajouts</h2>
                 <table class="table table-stripped table-hover mt-5">
                     <thead>
@@ -25,6 +25,10 @@
                             <tr>
                                 <th scope="row">{{arrivage.createdAt | date('d/m/Y')}}</th>
                                 <td>{{arrivage.name}}</td>
+                                <td>{{arrivage.0}}</td>
+                                <td>{{arrivage.1}}</td>
+                                <td>{{arrivage.2}}</td>
+                                <td>{{arrivage.3}}</td>
                                 <td><a href="{{ path('arrivage', {id: arrivage.id})}}">En savoir plus</a></td>
 
                             </tr>

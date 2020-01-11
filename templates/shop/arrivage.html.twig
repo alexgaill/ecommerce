@@ -26,7 +26,7 @@
                         <td>{{product.correct}}</td>
                         <td>{{product.occasion}}</td>
                         <td>{{product.abimee}}</td>
-                        <td><a href="{{ path('card', {id: product.id})}}">Voir</a></td>
+                        <td><a href="{{ path('card', {id: product.id, slug: product.0})}}">Voir</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

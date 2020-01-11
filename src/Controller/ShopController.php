@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\Products;
+use App\Entity\Arrivage;
 
+use App\Entity\Products;
 use App\Repository\EntryRepository;
 use App\Repository\StockRepository;
 use App\Repository\ArrivageRepository;
+
 use App\Repository\ProductsRepository;
 
 use Knp\Component\Pager\PaginatorInterface;
-
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -27,13 +28,19 @@ class ShopController extends AbstractController
     public function index(ArrivageRepository $repository, EntryRepository $repo) : Response
     {
        $arrivage = $repository->findLastTen();
+       $datas = [];
         
-        // foreach ($arrivage as $line) {
-        //     array_push($line, $repo->quantity($line->getId()));
-        // }
-
+        foreach ($arrivage as $line) {
+            foreach ($repo->quantity($line["id"]) as $quantities){
+                foreach ($quantities as $quantity) {
+                    array_push($line, $quantity);
+                }
+            }
+            array_push($datas, $line);
+        }
+        dump($datas);
         return $this->render('shop/index.html.twig', [
-            'arrivages' => $arrivage
+            'arrivages' => $datas
             ]);
     }
 
@@ -86,9 +93,7 @@ class ShopController extends AbstractController
      */
     public function card(string $slug, Products $product, ProductsRepository $repository) : Response
     {
-        $this->repository = $repository;
-
-        $setList = $this->repository->setSearch( $product->getName());
+        $setList = $repository->setSearch($product->getName());
 
         if ($product->getSlug() !== $slug) {
             return $this->redirectToRoute('shop/card.html.twig', [
@@ -108,11 +113,19 @@ class ShopController extends AbstractController
     /** 
      * @Route("/arrivage/{id}", name="arrivage")
      */
-    public function arrivage($id, ArrivageRepository $repository)
+    public function arrivage($id, ProductsRepository $productsRepository, EntryRepository $entryRepository)
     {
-        $arrivage = $repository->find($id);
+
+        $entries = $entryRepository->getEntriesWithName($id);
+        $datas = [];
+        foreach ($entries as $entry) {
+            $product = $productsRepository->find($entry["id"]);
+            array_push($entry, $product->getSlug());
+            array_push($datas, $entry);
+        }
+        dump($datas);
         return $this->render('shop/arrivage.html.twig', [
-            'products' => $arrivage->getEntries()
+            'products' => $datas
         ]);
     }
 } 
