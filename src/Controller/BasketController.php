@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Stock;
 use App\Form\StockType;
 
+use App\Repository\UserRepository;
 use App\Repository\ProductsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

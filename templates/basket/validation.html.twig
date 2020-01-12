@@ -3,12 +3,38 @@
 {% block body %}
     <div class="page-top-info">
         <div class="container">
-        <h4 class="text-center">Validation et paiement</h4>
+        <p class="h4 text-center">Validation et paiement</p>
         </div>
     </div>
     <div class="container spad">
         {% if app.user %}
             <h3>Récapitulatif de vos coordonnées</h3>
+
+            <div class="row spad">
+                <dl class="row col-6">
+                    <dt class="col-sm-3">Nom</dt>
+                    <dd class="col-sm-9">{{ app.user.nom }}</dd>
+
+                    <dt class="col-sm-3">Prénom</dt>
+                    <dd class="col-sm-9">{{ app.user.prenom }}</dd>
+
+                    <dt class="col-sm-3">Téléphone</dt>
+                    <dd class="col-sm-9">{{ app.user.telephone }}</dd>
+
+                    <dt class="col-sm-3">Mail</dt>
+                    <dd class="col-sm-9">{{ app.user.email }}</dd>
+                </dl>
+                <dl class="row col-6">
+                    <dt class="col-sm-3">Adresse</dt>
+                    <dd class="col-sm-9">{{ app.user.adresse }}</dd>
+
+                    <dt class="col-sm-3">Ville</dt>
+                    <dd class="col-sm-9">{{ app.user.ville }}</dd>
+
+                    <dt class="col-sm-3">Code Postal</dt>
+                    <dd class="col-sm-9">{{ app.user.codePostal }}</dd>
+                </dl>
+            </div>
         
         {% else %}
             <div class="row justify-content-around">
