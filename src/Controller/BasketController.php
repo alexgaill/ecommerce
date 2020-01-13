@@ -46,14 +46,16 @@ class BasketController extends AbstractController
             'imgSmall' => $product->getImgSmall(),
             'price' => $price,
             'setCode' => $product->getSetCode(),
-            'new' => $form->get('new'),
-            'correct' => $form->get('correct'),
-            'occasion' => $form->get('occasion'),
-            'abimee' => $form->get('abimee'),
+            'new' => intval($form->get('new')),
+            'correct' => intval($form->get('correct')),
+            'occasion' => intval($form->get('occasion')),
+            'abimee' => intval($form->get('abimee')),
             'totalNew' => $price * intval($form->get('new')),
             'totalCorrect' => $price * intval($form->get('correct')) * 0.9,
             'totalOccasion' => $price * intval($form->get('occasion')) * 0.8,
-            'totalAbimee' => $price * intval($form->get('abimee')) * 0.6
+            'totalAbimee' => $price * intval($form->get('abimee')) * 0.6,
+            'poids' => 2 * (intval($form->get('new')) + intval($form->get('correct')) + intval($form->get('occasion')) + intval($form->get('abimee'))),
+            'total' => $price * intval($form->get('new')) + $price * intval($form->get('correct')) * 0.9 + $price * intval($form->get('occasion')) * 0.8 + $price * intval($form->get('abimee')) * 0.6
         ];
         
         $session->set('panier', $panier);
@@ -74,8 +76,12 @@ class BasketController extends AbstractController
     /**
      * @Route("/validation", name="validation")
      */
-    public function validation()
+    public function validation(SessionInterface $session)
     {
-        return $this->render('basket/validation.html.twig');
+        $panier = $session->get('panier', []);
+
+        return $this->render('basket/validation.html.twig', [
+            'panier', $panier
+        ]);
     }
 }

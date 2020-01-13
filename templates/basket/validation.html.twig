@@ -6,11 +6,11 @@
         <p class="h4 text-center">Validation et paiement</p>
         </div>
     </div>
-    <div class="container spad">
+    <div class="container mt-5">
         {% if app.user %}
             <h3>Récapitulatif de vos coordonnées</h3>
 
-            <div class="row spad">
+            <div class="row mt-5">
                 <dl class="row col-6">
                     <dt class="col-sm-3">Nom</dt>
                     <dd class="col-sm-9">{{ app.user.nom }}</dd>
@@ -48,5 +48,59 @@
                 </div>
             </div>
         {% endif %}
+    </div>
+    <div class="spad">
+        <div class="">
+        <div class="row justify-content-around">
+            <div class="mx-auto col-6">
+                <h3>Livraison</h3>
+                
+                <div class="mt-5">
+                    <div class="form-group">
+                        <input type="radio" name="livraison" value="mp77">
+                        <label>Remise en main propre à Val d'Europe (77)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="livraison" value="mp75">
+                        <label>Remise en main propre à Paris (75)</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="livraison"  value="livraison">
+                        <label>Se faire livrer</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="typeLivraison">Choisissez votre type de livraison</label>
+                        <select name="typeLivraison">
+                            {% if product.poids <= 20 %}
+                                <option value="0.97">Lettre simple: 0.97€</option>
+                                <option value="suivi"></option>
+                                <option value="recommandé"></option>
+                            {% elseif product.poids <= 50 %}
+                            {% elseif product.poids <= 100 %}
+                            {% elseif product.poids <= 250 %}
+                            {% elseif product.poids <= 500 %}
+                            {% elseif product.poids <= 1000 %}
+                            {% elseif product.poids <= 2000 %}
+                            {% elseif product.poids <= 3000 %}
+                            {% endif %}
+                            
+                        </select>
+                    </div>
+
+                </div>
+                <p>Si se faire livrer, vérifier adresse avec input et proposer type de livraison simple, suivi, recommander. Modifier prix dans récapitulatif de droite en fonction du choix</p>
+            </div>
+            <div class="col-3 mr-3">
+            <div class="jumbotron">
+                <div class="container">
+                    <p>Récapitulatif</p>
+                    <div class="container">
+                    <button class="btn btn-primary rounded">Payer</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
     </div>
 {% endblock %}
