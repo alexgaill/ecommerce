@@ -24,8 +24,10 @@ class BasketController extends AbstractController
     public function index(SessionInterface $session)
     {
         $panier = $session->get('panier');
+        $total = $session->get('total');
         return $this->render('basket/index.html.twig',[
-            'panier' => $panier
+            'panier' => $panier,
+            'total' => $total
         ]);
     }
 
@@ -57,8 +59,17 @@ class BasketController extends AbstractController
             'poids' => 2 * (intval($form->get('new')) + intval($form->get('correct')) + intval($form->get('occasion')) + intval($form->get('abimee'))),
             'total' => $price * intval($form->get('new')) + $price * intval($form->get('correct')) * 0.9 + $price * intval($form->get('occasion')) * 0.8 + $price * intval($form->get('abimee')) * 0.6
         ];
+        $poids = 0;
+        $total = 0;
+        foreach ($panier as $article){
+            $poids += $article["poids"];
+            $total += $article["total"];
+        }
         
+        $session->set('poids', $poids);
+        $session->set('total', $total);
         $session->set('panier', $panier);
+
         return $this->redirectToRoute('basket');
     }
 
@@ -68,8 +79,14 @@ class BasketController extends AbstractController
     public function removeFromBasket (SessionInterface $session, $id)
     {
         $panier = $session->get('panier', []);
+        $poids = $session->get('poids');
+        $total = $session->get('total');
+        $poids -= $panier[$id]['poids']; 
+        $total -= $panier[$id]['total']; 
         unset($panier[$id]);
         $session->set('panier', $panier);
+        $session->set('poids', $poids);
+        $session->set('total', $total);
         return $this->redirectToRoute('basket');
     }
 
@@ -79,9 +96,13 @@ class BasketController extends AbstractController
     public function validation(SessionInterface $session)
     {
         $panier = $session->get('panier', []);
+        $poids = $session->get('poids');
+        $total = $session->get('total');
 
         return $this->render('basket/validation.html.twig', [
-            'panier', $panier
+            'panier' => $panier,
+            'poids' => $poids,
+            'total' => $total
         ]);
     }
 }

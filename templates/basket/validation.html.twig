@@ -6,8 +6,8 @@
         <p class="h4 text-center">Validation et paiement</p>
         </div>
     </div>
-    <div class="container mt-5">
-        {% if app.user %}
+    {% if app.user %}
+        <div class="container mt-5">
             <h3>Récapitulatif de vos coordonnées</h3>
 
             <div class="row mt-5">
@@ -35,8 +35,93 @@
                     <dd class="col-sm-9">{{ app.user.codePostal }}</dd>
                 </dl>
             </div>
-        
-        {% else %}
+        </div>
+        <div class="spad">
+            <div class="row justify-content-around">
+                <div class="mx-auto col-6">
+                    <h3>Livraison</h3>
+                    
+                    <div class="mt-5">
+                        <div class="form-group">
+                            <input type="radio" name="livraison" value="mp77">
+                            <label>Remise en main propre à Val d'Europe (77)</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="livraison" value="mp75">
+                            <label>Remise en main propre à Paris (75)</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="livraison"  id="livraison" value="livraison">
+                            <label>Se faire livrer</label>
+                        </div>
+                        <div class="form-group d-none" id="tarifLivraison"> 
+                            <label for="typeLivraison">Choisissez votre type de livraison</label>
+                            <select name="typeLivraison" id="selectTarif">
+                                {% if poids <= 20 %}
+                                    <option value="0.97">Lettre simple: 0.97€</option>
+                                    <option value="1.42">Lettre suivie: 1.42€</option>
+                                    <option value="5.45">Lettre recommandée: 5.45€</option>
+                                {% elseif poids <= 50 %}
+                                    <option value="1.94">Lettre simple: 1.94€</option>
+                                    <option value="2.39">Lettre suivie: 2.39€</option>
+                                    <option value="6.00">Lettre recommandée: 6.00€</option>
+                                {% elseif poids <= 100 %}
+                                    <option value="1.94">Lettre simple: 1.94€</option>
+                                    <option value="2.39">Lettre suivie: 2.39€</option>
+                                    <option value="6.65">Lettre recommandée: 6.65€</option>
+                                {% elseif poids <= 250 %}
+                                    <option value="3.88">Lettre simple: 3.88€</option>
+                                    <option value="4.33">Lettre suivie: 4.33€</option>
+                                    <option value="7.85">Lettre recommandée: 7.85€</option>
+                                {% elseif poids <= 500 %}
+                                    <option value="5.82">Lettre simple: 5.82€</option>
+                                    <option value="6.27">Lettre suivie: 6.27€</option>
+                                    <option value="9.00">Lettre recommandée: 9.00€</option>
+                                {% elseif poids <= 1000 %}
+                                    <option value="7.76">Lettre simple: 7.76€</option>
+                                    <option value="8.21">Lettre suivie: 8.21€</option>
+                                    <option value="10.15">Lettre recommandée: 10.15€</option>
+                                {% elseif poids <= 2000 %}
+                                    <option value="7.76">Lettre simple: 7.76€</option>
+                                    <option value="8.21">Lettre suivie: 8.21€</option>
+                                    <option value="11.85">Lettre recommandée: 11.85€</option>
+                                {% else %}
+                                    <option value="7.76">Lettre simple: 7.76€</option>
+                                    <option value="8.21">Lettre suivie: 8.21€</option>
+                                    <option value="13.08">Lettre recommandée: 13.08€</option>
+                                {% endif %}
+                            </select>
+                            <p>Vérifier vos informations de livraison avant de valider votre commande.</p>
+                            <div class="form-group"><label for="nom">Nom:</label><input type="text" name="nom" value="{{app.user.nom}}"></div>
+                            <div class="form-group"><label for="prenom">Prenom:</label><input type="text" name="prenom" value="{{app.user.prenom}}"></div>
+                            <div class="form-group"><label for="telephone">Téléphone:</label><input type="text" name="telephone" value="{{app.user.telephone}}"></div>
+                            <div class="form-group"><label for="email">Email:</label><input type="text" name="email" value="{{app.user.email}}"></div>
+                            <div class="form-group"><label for="adresse">Adresse:</label><input type="text" name="adresse" value="{{app.user.adresse}}"></div>
+                            <div class="form-group"><label for="ville">Ville:</label><input type="text" name="ville" value="{{app.user.ville}}"></div>
+                            <div class="form-group"><label for="codePostal">Code postal:</label><input type="text" name="codePostal" value="{{app.user.codePostal}}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 mr-3">
+                    <div class="jumbotron">
+                        <h4 class="mb-3 text-center"><ins>Récapitulatif</ins></h4>
+                        <dl class="row">
+                            <dt class="col-sm-6">Panier:</dt>
+                            <dd class="col-sm-6" id="recapPanier">{{ total|number_format(2, '.', ',') }} €</dd>
+                            <dt class="col-sm-6">Livraison:</dt>
+                            <dd class="col-sm-6"><span id="recapLivraison">0.00</span> €</dd>
+                            <dt class="col-sm-6">Total:</dt>
+                            <dd class="col-sm-6"><span id="totalFinal">0.00</span> €</dd>
+                        </dl>
+                        <div class="container text-center">
+                            <button class="btn btn-primary rounded">Payer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container spad">
             <div class="row justify-content-around">
                 <div class="">
                     <h4>Vous avez un compte ?</h4>
@@ -47,60 +132,6 @@
                     <a href="{{ path('signup') }}"><button class="btn btn-primary">Inscription</button></a>
                 </div>
             </div>
-        {% endif %}
-    </div>
-    <div class="spad">
-        <div class="">
-        <div class="row justify-content-around">
-            <div class="mx-auto col-6">
-                <h3>Livraison</h3>
-                
-                <div class="mt-5">
-                    <div class="form-group">
-                        <input type="radio" name="livraison" value="mp77">
-                        <label>Remise en main propre à Val d'Europe (77)</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="radio" name="livraison" value="mp75">
-                        <label>Remise en main propre à Paris (75)</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="radio" name="livraison"  value="livraison">
-                        <label>Se faire livrer</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="typeLivraison">Choisissez votre type de livraison</label>
-                        <select name="typeLivraison">
-                            {% if product.poids <= 20 %}
-                                <option value="0.97">Lettre simple: 0.97€</option>
-                                <option value="suivi"></option>
-                                <option value="recommandé"></option>
-                            {% elseif product.poids <= 50 %}
-                            {% elseif product.poids <= 100 %}
-                            {% elseif product.poids <= 250 %}
-                            {% elseif product.poids <= 500 %}
-                            {% elseif product.poids <= 1000 %}
-                            {% elseif product.poids <= 2000 %}
-                            {% elseif product.poids <= 3000 %}
-                            {% endif %}
-                            
-                        </select>
-                    </div>
-
-                </div>
-                <p>Si se faire livrer, vérifier adresse avec input et proposer type de livraison simple, suivi, recommander. Modifier prix dans récapitulatif de droite en fonction du choix</p>
-            </div>
-            <div class="col-3 mr-3">
-            <div class="jumbotron">
-                <div class="container">
-                    <p>Récapitulatif</p>
-                    <div class="container">
-                    <button class="btn btn-primary rounded">Payer</button>
-                </div>
-                </div>
-            </div>
         </div>
-        </div>
-    </div>
-    </div>
+    {% endif %}
 {% endblock %}

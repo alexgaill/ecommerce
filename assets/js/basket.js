@@ -20,8 +20,10 @@ function calculTotal (price, quantity){
 
 function affichage(){
     $("#totalTTCCarte").text(formatedPrice(calculSomme($(".totalCarte"))));
-    $("#totalHT").text(formatedPrice(parseFloat(calculSomme($(".totalCarte")))/1.2));
-    $("#TVA").text(formatedPrice(parseFloat(calculSomme($(".totalCarte"))) - parseFloat(calculSomme($(".totalCarte")))/1.2));
+    $("#totalHT").text(formatedPrice(calculSomme($(".totalCarte"))));
+    $("#TVA").text("0.00")
+    // $("#totalHT").text(formatedPrice(parseFloat(calculSomme($(".totalCarte")))/1.2));
+    // $("#TVA").text(formatedPrice(parseFloat(calculSomme($(".totalCarte"))) - parseFloat(calculSomme($(".totalCarte")))/1.2));
 
 }
 
@@ -43,4 +45,4 @@ $("#quantityAbimee").change( function(){
     affichage();
 });
 
-$("#totalPanier").text(calculSomme(document.querySelectorAll(".total-col h4")));
+// $("#totalPanier").text(calculSomme(document.querySelectorAll(".total-col h4")));
