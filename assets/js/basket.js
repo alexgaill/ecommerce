@@ -12,15 +12,15 @@ function formatedPrice(price){
 
 function calculTotal (price, quantity){
     if (quantity != 0) {
-        return parseFloat(price) * parseInt(quantity);
+        return (parseFloat(price) * parseInt(quantity)).toFixed(2);
     } else {
         return "0.00"
     }
 }
 
 function affichage(){
-    $("#totalTTCCarte").text(formatedPrice(calculSomme($(".totalCarte"))));
-    $("#totalHT").text(formatedPrice(calculSomme($(".totalCarte"))));
+    $("#totalTTCCarte").text(formatedPrice(calculSomme($(".totalCarte"))).toFixed(2));
+    $("#totalHT").text(formatedPrice(calculSomme($(".totalCarte")).toFixed(2)));
     $("#TVA").text("0.00")
     // $("#totalHT").text(formatedPrice(parseFloat(calculSomme($(".totalCarte")))/1.2));
     // $("#TVA").text(formatedPrice(parseFloat(calculSomme($(".totalCarte"))) - parseFloat(calculSomme($(".totalCarte")))/1.2));

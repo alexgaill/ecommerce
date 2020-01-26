@@ -3,7 +3,7 @@
 {% block body %}
     <div class="page-top-info">
         <div class="container">
-        <p class="h4 text-center">Validation et paiement</p>
+        <p class="h4 text-center">Validation et commande</p>
         </div>
     </div>
     {% if app.user %}
@@ -13,32 +13,33 @@
             <div class="row mt-5">
                 <dl class="row col-6">
                     <dt class="col-sm-3">Nom</dt>
-                    <dd class="col-sm-9">{{ app.user.nom }}</dd>
+                    <dd class="col-sm-9" id="nomUser">{{ app.user.nom }}</dd>
 
                     <dt class="col-sm-3">Prénom</dt>
-                    <dd class="col-sm-9">{{ app.user.prenom }}</dd>
+                    <dd class="col-sm-9" id="prenomUser">{{ app.user.prenom }}</dd>
 
                     <dt class="col-sm-3">Téléphone</dt>
-                    <dd class="col-sm-9">{{ app.user.telephone }}</dd>
+                    <dd class="col-sm-9" id="telephoneUser">{{ app.user.telephone }}</dd>
 
                     <dt class="col-sm-3">Mail</dt>
-                    <dd class="col-sm-9">{{ app.user.email }}</dd>
+                    <dd class="col-sm-9" id="emailUser">{{ app.user.email }}</dd>
                 </dl>
                 <dl class="row col-6">
                     <dt class="col-sm-3">Adresse</dt>
-                    <dd class="col-sm-9">{{ app.user.adresse }}</dd>
+                    <dd class="col-sm-9" id="adresseUser">{{ app.user.adresse }}</dd>
 
                     <dt class="col-sm-3">Ville</dt>
-                    <dd class="col-sm-9">{{ app.user.ville }}</dd>
+                    <dd class="col-sm-9" id="villeUser">{{ app.user.ville }}</dd>
 
                     <dt class="col-sm-3">Code Postal</dt>
-                    <dd class="col-sm-9">{{ app.user.codePostal }}</dd>
+                    <dd class="col-sm-9" id="codePostalUser">{{ app.user.codePostal }}</dd>
                 </dl>
+                <dl><a href="#" id="modifierUser">Modifier...</a></dl>
             </div>
         </div>
         <div class="spad">
             <div class="row justify-content-around">
-                <div class="mx-auto col-6">
+                <div class="mx-auto col-4">
                     <h3>Livraison</h3>
                     
                     <div class="mt-5">
@@ -91,30 +92,39 @@
                                     <option value="13.08">Lettre recommandée: 13.08€</option>
                                 {% endif %}
                             </select>
-                            <p>Vérifier vos informations de livraison avant de valider votre commande.</p>
-                            <div class="form-group"><label for="nom">Nom:</label><input type="text" name="nom" value="{{app.user.nom}}"></div>
-                            <div class="form-group"><label for="prenom">Prenom:</label><input type="text" name="prenom" value="{{app.user.prenom}}"></div>
-                            <div class="form-group"><label for="telephone">Téléphone:</label><input type="text" name="telephone" value="{{app.user.telephone}}"></div>
-                            <div class="form-group"><label for="email">Email:</label><input type="text" name="email" value="{{app.user.email}}"></div>
-                            <div class="form-group"><label for="adresse">Adresse:</label><input type="text" name="adresse" value="{{app.user.adresse}}"></div>
-                            <div class="form-group"><label for="ville">Ville:</label><input type="text" name="ville" value="{{app.user.ville}}"></div>
-                            <div class="form-group"><label for="codePostal">Code postal:</label><input type="text" name="codePostal" value="{{app.user.codePostal}}"></div>
+                            <p>Attention, votre commande sera envoyée une fois le règlement encaissé.</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-3 mr-3">
+                </div>  
+                <div class="col-7 mr-3">
                     <div class="jumbotron">
-                        <h4 class="mb-3 text-center"><ins>Récapitulatif</ins></h4>
-                        <dl class="row">
-                            <dt class="col-sm-6">Panier:</dt>
-                            <dd class="col-sm-6" id="recapPanier">{{ total|number_format(2, '.', ',') }} €</dd>
-                            <dt class="col-sm-6">Livraison:</dt>
-                            <dd class="col-sm-6"><span id="recapLivraison">0.00</span> €</dd>
-                            <dt class="col-sm-6">Total:</dt>
-                            <dd class="col-sm-6"><span id="totalFinal">0.00</span> €</dd>
-                        </dl>
-                        <div class="container text-center">
-                            <button class="btn btn-primary rounded">Payer</button>
+                        <div class="row justify-content-between">
+
+                            <div class="col-5">
+                                <h4 class="mb-3 text-center"><ins>Récapitulatif</ins></h4>
+                                <dl class="row">
+                                    <dt class="col-sm-6">Panier:</dt>
+                                    <dd class="col-sm-6" id="recapPanier">{{ total|number_format(2, '.', ',') }} €</dd>
+                                    <dt class="col-sm-6">Livraison:</dt>
+                                    <dd class="col-sm-6"><span id="recapLivraison">0.00</span> €</dd>
+                                    <dt class="col-sm-6">Total:</dt>
+                                    <dd class="col-sm-6"><span id="totalFinal">{{ total|number_format(2, '.', ',') }}</span> €</dd>
+                                </dl>
+                            </div>
+                            <div class="col-5">
+                                <div class="text-center">
+                                    <h4 class="mb-3 tet-center"><ins>Moyen de paiement</ins></h4>
+                                    <select name="typePaiement" id="typePaiement" class="mt-3">
+                                        <option value="Especes">Espèces</option>
+                                        <option value="Cheque">Chèque</option>
+                                        <option value="Paypal">Paypal</option>
+                                    </select>
+                                    <p class="d-none" id="lienPaypal">Règlez votre commande directement sur <a href="https://paypal.me/alexgaill?locale.x=fr_FR" target="_blank">Paypal</a> en précisant le montant dû.</p>
+                                </div>
+                                <div class="container text-center mt-3">
+                                    <button class="btn btn-primary rounded" id="commander">Commander</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
