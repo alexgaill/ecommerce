@@ -89,15 +89,15 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td id="priceNew">{{product.price|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{product.price|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="new" id="quantityNew">
+                                    <select name="new" class="quantity">
                                         {% for qty in 0 .. stock.new %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
-                                <td><span id="totalNew" class="totalCarte">0.00</span> €</td>
+                                <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                             <tr>
                                 <td>Correcte</td>
@@ -108,15 +108,15 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td id="priceCorrect">{{(product.price * 0.9)|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{(product.price * 0.9)|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="correct" id="quantityCorrect">
+                                    <select name="correct" class="quantity">
                                         {% for qty in 0 .. stock.correct %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
-                                <td><span id="totalCorrect" class="totalCarte">0.00</span> €</td>
+                                <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                             <tr>
                                 <td>Occasion</td>
@@ -127,34 +127,34 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td id="priceOccasion">{{(product.price * 0.8)|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{(product.price * 0.8)|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="occasion" id="quantityOccasion">
+                                    <select name="occasion" class="quantity">
                                         {% for qty in 0 .. stock.occasion %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
-                                <td><span id="totalOccasion" class="totalCarte">0.00</span> €</td>
+                                <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                             <tr>
                                 <td>Abimee</td>
-                                {% if stock.new > 2 %}
+                                {% if stock.abimee > 2 %}
                                     <td class="text-success">En stock</td>
                                 {% elseif stock.abimee > 0 %}
                                     <td class="text-warning">Stock faible</td>
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td id="priceAbimee">{{(product.price * 0.6)|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{(product.price * 0.6)|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="abimee" id="quantityAbimee">
+                                    <select name="abimee" class="quantity">
                                         {% for qty in 0 .. stock.abimee %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
                                     </select>
                                 </td>
-                                <td><span id="totalAbimee" class="totalCarte">0.00</span> €</td>
+                                <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                         {% endfor %} 
                     </tbody>
@@ -164,7 +164,7 @@
                             <td><span id="totalHT">0.00 €</span></td>
                         </tr>
                         <tr>
-                                <td class="text-right" colspan="4">TVA: </td>
+                                <td class="text-right" colspan="4">TVA (0.00 %): </td>
                                 <td><span id="TVA">0.00 €</span></td>
                         </tr>
                         <tr>

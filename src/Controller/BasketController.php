@@ -69,7 +69,8 @@ class BasketController extends AbstractController
         $session->set('poids', $poids);
         $session->set('total', $total);
         $session->set('panier', $panier);
-
+        var_dump($request->request);
+        return $this->render('basket/index.html.twig');
         return $this->redirectToRoute('basket');
     }
 

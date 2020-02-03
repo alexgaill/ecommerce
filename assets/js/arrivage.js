@@ -1,11 +1,24 @@
 let i = 1;
 
+/**
+ * Créé un elmt dans la datalist pour chaque produit présent dans la bdd
+ * @param {array} datas 
+ * @param {object} elem 
+ */
 function getCards(datas, elem) {
     for ( let data of datas) {
         elem.append('<option value="'+ data.setCode +'">' + data.name +' - '+ data.setCode+ '</option>');
     }
 }
-
+/**
+ * Calcul le coût total d'achat d'une ligne de produit
+ * @param {float} cost 
+ * @param {int} newCard 
+ * @param {int} correct 
+ * @param {int} occasion 
+ * @param {int} abimee 
+ * @return {float}
+ */
 function totalPrice(cost, newCard, correct, occasion, abimee){
     let totalNew = cost * newCard;
     let totalCorrect = cost * correct * 0.9;
@@ -14,7 +27,10 @@ function totalPrice(cost, newCard, correct, occasion, abimee){
 
     return (totalNew + totalCorrect + totalOccasion + totalAbimee).toFixed(2);
 }
-
+/**
+ * Créé une ligne d'ajout de carte à acheter
+ * @param {int} key 
+ */
 function createLine (key){
     $("tbody").append("<tr class='ajout "+ key +"'></tr>");
         $("."+ key).append('<td class="cardName"><input list="cardName" name="cardName"><datalist id="cardName"></datalist></td>');
@@ -27,6 +43,9 @@ function createLine (key){
         $("."+ key).append('<td class="total"></td>');
 }
 
+/**
+ * Calcul le montant total d'achat des différentes lignes et l'affiche
+ */
 function montantTotal(){
     let totalHT = 0;
     for (const line of $(".total")) {
@@ -36,6 +55,9 @@ function montantTotal(){
     $("#totalTTC").text(totalHT.toFixed(2));
 }
 
+/**
+ * Affiche les coordonnées du vendeur
+ */
 $("#sellerId").change(function(){
     $.ajax({
         url: "./getSeller/" + $(this).val(),
@@ -52,13 +74,19 @@ $("#sellerId").change(function(){
         $("#ville").val(data.ville);
     })
 })
-
+/**
+ * Charge les produits pour la datalist
+ */
 $.ajax({
         url:"./getCards",
         method:"GET",
         dataType:"json"
 })
 .done(function(datas){
+
+    /**
+     * Créé une nouvelle ligne au click
+     */
     $("#addMore").click(function(){
         
         createLine(i);
@@ -74,6 +102,9 @@ $.ajax({
 
         getCards(datas, selectCardNameDatalist);
 
+        /**
+         * Au choix du produit, récupère son prix d'achat
+         */
         selectCardNameInput.change(function(){
             $.ajax({
                 url:"./getCost/" + $(this).val(),
@@ -82,6 +113,9 @@ $.ajax({
             })
             .done(function(datas){
 
+                /**
+                 * Au changement d'une quantité, calcul et affiche le prix d'achat de la ligne.
+                 */
                 selectCostPrice.text(datas.cost);
 
                 newQty.change(function(){ 
@@ -108,6 +142,9 @@ $.ajax({
         })
         return i ++
     })
+    /**
+     * Jsonifie les données pour les envoyer dans le back.
+     */
     $("#enregistrer").click(function(){
 
         let cartes = [];
@@ -122,7 +159,6 @@ $.ajax({
                 totalHT: $("."+ j + " .total").html()
             })
         }
-        console.log(cartes);
         $.ajax({
             url:"./saveArrivage",
             method:"POST",
@@ -143,7 +179,7 @@ $.ajax({
             }
         })
         .done(function(datas){
-            console.log(datas);
+            document.location = "./basket/";
         })
     })
 

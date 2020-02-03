@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Arrivage;
-
 use App\Entity\Products;
 use App\Repository\EntryRepository;
 use App\Repository\StockRepository;
@@ -38,7 +36,6 @@ class ShopController extends AbstractController
             }
             array_push($datas, $line);
         }
-        dump($datas);
         return $this->render('shop/index.html.twig', [
             'arrivages' => $datas
             ]);
