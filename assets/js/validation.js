@@ -11,14 +11,14 @@ $("#modifierUser").click(function(e){
     const adresseUser = $("#adresseUser").html();
     const villeUser = $("#villeUser").html();
     const codePostalUser = $("#codePostalUser").html();
-    $("#nomUser").html("<input type='text' id='inputNom' value='"+ nomUser +"'>");
-    $("#prenomUser").html("<input type='text' id='inputPrenom' value='"+ prenomUser +"'>");
-    $("#telephoneUser").html("<input type='text' id='inputTelephone' value='"+ telephoneUser +"'>");
-    $("#emailUser").html("<input type='text' id='inputEmail' value='"+ emailUser +"'>");
-    $("#adresseUser").html("<input type='text' id='inputAdresse' value='"+ adresseUser +"'>");
-    $("#villeUser").html("<input type='text' id='inputVille' value='"+ villeUser +"'>");
-    $("#codePostalUser").html("<input type='text' id='inputCodePostal' value='"+ codePostalUser +"'>");
-
+    $("#nomUser").html("<input type='text' id='inputNom' class='inputUser' value='"+ nomUser +"'>");
+    $("#prenomUser").html("<input type='text' id='inputPrenom' class='inputUser' value='"+ prenomUser +"'>");
+    $("#telephoneUser").html("<input type='text' id='inputTelephone' class='inputUser' value='"+ telephoneUser +"'>");
+    $("#emailUser").html("<input type='text' id='inputEmail' class='inputUser' value='"+ emailUser +"'>");
+    $("#adresseUser").html("<input type='text' id='inputAdresse' class='inputUser' value='"+ adresseUser +"'>");
+    $("#villeUser").html("<input type='text' id='inputVille' class='inputUser' value='"+ villeUser +"'>");
+    $("#codePostalUser").html("<input type='text' id='inputCodePostal' class='inputUser' value='"+ codePostalUser +"'>");
+    $("#modifierUser").hide();
 })
 
 /**
@@ -26,7 +26,6 @@ $("#modifierUser").click(function(e){
  * Remove ou add la class d-none pour l'affichage des tarifs de livraison, 
  * si le client choisit de se faire livrer
  */
-
 $("input[name=livraison]").change(function(){
     if ($(this).val() == "livraison") {
         $("#tarifLivraison").removeClass("d-none");
@@ -64,5 +63,41 @@ $("#typePaiement").change(function(){
 /**
  * Récupération de la commande et sauvegarde de celle-ci.
  */
+$("#commander").click(function(){
+    if ($(".inputUser").length == 7){
+        user = {
+            'nom': $("#inputNom").val(),
+            'prenom': $("#inputPrenom").val(),
+            'telephone': $("#inputTelephone").val(),
+            'mail': $("#inputEmail").val(),
+            'adresse': $("#inputAdresse").val(),
+            'ville': $("#inputVille").val(),
+            'codePostal': $("#inputCodePostal").val()
+        }
+    }else{
+        user = null
+    }
+    let livraison = $("input:checked").val();
 
-$("#commander").click()
+    if (livraison == "livraison") {
+        tarif=$("#selectTarif").val();
+    }else{
+        tarif=0.00;
+    }
+
+    let paiement = $("#typePaiement").val();
+
+    let data = {
+        user,
+        livraison,
+        tarif,
+        paiement
+    }
+
+    $.ajax({
+        url:"./saveCommande",
+        method:"POST",
+        dataType:"json",
+        data
+    })
+})

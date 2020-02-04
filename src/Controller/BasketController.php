@@ -38,27 +38,36 @@ class BasketController extends AbstractController
     {
         $product = $repository->find($id);
         $price = $product->getPrice();
+        $panier = $session->get('panier', []);
         
         $form = $request->request;
+        $quantity = $form->all();
+        $quantity = array_chunk($quantity, 4, true);
+
+        foreach ($quantity as $type) {
+            $key = array_key_first($type);
+            $key = explode("new", $key)[1];
+            
+            $panier[$id.$key] = [
+                'id' => $id,
+                'name' => $product->getName(),
+                'imgSmall' => $product->getImgSmall(),
+                'price' => $price,
+                'setCode' => $product->getSetCode(),
+                'type' => $key,
+                'new' => intval($type["new".$key]),
+                'correct' => intval($type["correct".$key]),
+                'occasion' => intval($type["occasion".$key]),
+                'abimee' => intval($type["abimee".$key]),
+                'totalNew' => $price * intval($type["new".$key]),
+                'totalCorrect' => $price * intval($type["correct".$key]) * 0.9,
+                'totalOccasion' => $price * intval($type["occasion".$key]) * 0.8,
+                'totalAbimee' => $price * intval($type["abimee".$key]) * 0.6,
+                'poids' => 2 * (intval($type["new".$key]) + intval($type["correct".$key]) + intval($type["occasion".$key]) + intval($type["abimee".$key])),
+                'total' => $price * intval($type["new".$key]) + $price * intval($type["correct".$key]) * 0.9 + $price * intval($type["occasion".$key]) * 0.8 + $price * intval($type["abimee".$key]) * 0.6
+            ];
+        }
         
-        $panier = $session->get('panier', []);
-        $panier[$id] = [
-            'id' => $id,
-            'name' => $product->getName(),
-            'imgSmall' => $product->getImgSmall(),
-            'price' => $price,
-            'setCode' => $product->getSetCode(),
-            'new' => intval($form->get('new')),
-            'correct' => intval($form->get('correct')),
-            'occasion' => intval($form->get('occasion')),
-            'abimee' => intval($form->get('abimee')),
-            'totalNew' => $price * intval($form->get('new')),
-            'totalCorrect' => $price * intval($form->get('correct')) * 0.9,
-            'totalOccasion' => $price * intval($form->get('occasion')) * 0.8,
-            'totalAbimee' => $price * intval($form->get('abimee')) * 0.6,
-            'poids' => 2 * (intval($form->get('new')) + intval($form->get('correct')) + intval($form->get('occasion')) + intval($form->get('abimee'))),
-            'total' => $price * intval($form->get('new')) + $price * intval($form->get('correct')) * 0.9 + $price * intval($form->get('occasion')) * 0.8 + $price * intval($form->get('abimee')) * 0.6
-        ];
         $poids = 0;
         $total = 0;
         foreach ($panier as $article){
@@ -69,8 +78,7 @@ class BasketController extends AbstractController
         $session->set('poids', $poids);
         $session->set('total', $total);
         $session->set('panier', $panier);
-        var_dump($request->request);
-        return $this->render('basket/index.html.twig');
+
         return $this->redirectToRoute('basket');
     }
 

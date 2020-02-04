@@ -91,7 +91,7 @@
                                 {% endif %}
                                 <td class="price">{{product.price|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="new" class="quantity">
+                                    <select name="{{"new" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.new %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
@@ -110,7 +110,7 @@
                                 {% endif %}
                                 <td class="price">{{(product.price * 0.9)|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="correct" class="quantity">
+                                    <select name="{{ "correct" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.correct %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
@@ -129,7 +129,7 @@
                                 {% endif %}
                                 <td class="price">{{(product.price * 0.8)|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="occasion" class="quantity">
+                                    <select name="{{ "occasion" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.occasion %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
@@ -148,7 +148,7 @@
                                 {% endif %}
                                 <td class="price">{{(product.price * 0.6)|number_format(2, '.', ',')}}</td>
                                 <td>
-                                    <select name="abimee" class="quantity">
+                                    <select name="{{ "abimee" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.abimee %}
                                             <option value="{{qty}}">{{qty}}</option>
                                         {% endfor %}
