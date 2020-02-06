@@ -89,7 +89,7 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td class="price">{{product.price|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{product.price|number_format(2,'.',',')}}</td>
                                 <td>
                                     <select name="{{"new" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.new %}
@@ -108,7 +108,7 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td class="price">{{(product.price * 0.9)|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{(product.price * 0.9)|number_format(2,'.',',')}}</td>
                                 <td>
                                     <select name="{{ "correct" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.correct %}
@@ -127,7 +127,7 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td class="price">{{(product.price * 0.8)|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{(product.price * 0.8)|number_format(2,'.',',')}}</td>
                                 <td>
                                     <select name="{{ "occasion" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.occasion %}
@@ -146,7 +146,7 @@
                                 {% else %}
                                     <td class="text-danger">Indisponible</td>
                                 {% endif %}
-                                <td class="price">{{(product.price * 0.6)|number_format(2, '.', ',')}}</td>
+                                <td class="price">{{(product.price * 0.6)|number_format(2,'.',',')}}</td>
                                 <td>
                                     <select name="{{ "abimee" ~ stock.stockType | capitalize}}" class="quantity">
                                         {% for qty in 0 .. stock.abimee %}

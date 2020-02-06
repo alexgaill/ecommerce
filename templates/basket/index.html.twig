@@ -29,7 +29,7 @@
 							<tbody>
                                 {% for product in panier %}
                                     <tr>
-                                        <td class="quy-col font-weight-bold" rowspan="6"><a href="{{ path('basket_remove', {id : product.id}) }}"><i class="flaticon-cancel text-danger"></i></a></td>
+                                        <td class="quy-col font-weight-bold" rowspan="6"><a href="{{ path('basket_remove', {id : product.id, type : product.type}) }}"><i class="flaticon-cancel text-danger"></i></a></td>
                                     </tr>
                                     <tr>
                                         <td class="product-col" rowspan="5">

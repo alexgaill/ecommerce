@@ -50,6 +50,7 @@ function affichage(){
  */
 $(".quantity").change(function () {
     let total = $(this).closest('tr').find('.price').text() * $(this).val();
+    total = Math.round(total*100)/100;
     $(this).closest('tr').find('.totalCarte').text(total);
     affichage();
 })

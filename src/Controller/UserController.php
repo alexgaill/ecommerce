@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-
+use App\Notification\InscriptionNotification;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,7 +29,7 @@ class UserController extends AbstractController
      * @Route("/signup", name="signup")
      * @return Response
      */
-    public function signup(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
+    public function signup(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, InscriptionNotification $notification)
     {
         $user = new User();
         $this->manager = $manager;
@@ -51,6 +51,8 @@ class UserController extends AbstractController
             
             $this->manager->persist($user);
             $this->manager->flush();
+            $notification->notify($user);
+
             return $this->redirectToRoute('login');
         }
 
@@ -73,5 +75,12 @@ class UserController extends AbstractController
     public function account()
     {
 
+    }
+
+    /**
+     * @Route("/validationCompte/{token}", name="validationCompte")
+     */
+    public function validationCompte($token){
+        return $this->render('validation.html.twig');
     }
 }

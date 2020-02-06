@@ -6,8 +6,6 @@ use Doctrine\ORM\Query;
 use App\Entity\Products;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-// use Doctrine\ORM\Query\Expr\Comparison;
-// use Doctrine\Common\Collections\Expr\Comparison;
 
 /**
  * @method Products|null find($id, $lockMode = null, $lockVersion = null)

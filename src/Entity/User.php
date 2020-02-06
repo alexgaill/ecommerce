@@ -93,9 +93,15 @@ class User implements UserInterface
      */
     private $listArrivages;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="user_id")
+     */
+    private $listCommandes;
+
     public function __construct()
     {
         $this->listArrivages = new ArrayCollection();
+        $this->listCommandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -284,4 +290,35 @@ class User implements UserInterface
         
     }
     public function getUsername() {}
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getListCommandes(): Collection
+    {
+        return $this->listCommandes;
+    }
+
+    public function addListCommande(Commande $listCommande): self
+    {
+        if (!$this->listCommandes->contains($listCommande)) {
+            $this->listCommandes[] = $listCommande;
+            $listCommande->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListCommande(Commande $listCommande): self
+    {
+        if ($this->listCommandes->contains($listCommande)) {
+            $this->listCommandes->removeElement($listCommande);
+            // set the owning side to null (unless already changed)
+            if ($listCommande->getUserId() === $this) {
+                $listCommande->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
 }

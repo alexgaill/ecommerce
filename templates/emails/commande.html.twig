@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content=" Divisima | eCommerce Template">
+        <meta name="keywords" content="divisima, eCommerce, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+       <header class="header-section" style="background-color: rgb(33,37,41);">
+		<div class="header-top">
+			<div class="container text-center">
+				<h2 style="color: white;">Y C S</h2>
+			</div>
+		</div>
+	</header>
+    <main>
+    <div class="my-5">
+        <div class="container">
+            <h2>Merci pour votre commande n° {{ commande.id }}</h2>
+
+            <h3 class="mt-5">Voici le résumé de celle-ci:</h3>
+            <ul class="mt-5 list-group">
+            {% for ligne in commande.getListLignesCommande %}
+                <li class="list-group-item">{{ ligne.getproductId.name}} | {{ligne.total | number_format(2, '.', ',')}}</li>
+            {% endfor %}
+            <li class="list-group-item">Livraison: {{commande.livraison}} | {{commande.tarifLivraison}}</li>
+            <li class="list-group-item"><strong>Total: {{commande.montantTotal}}</strong></li>
+            </ul>
+            <hr>
+
+            <p>Cette commande est actuellement en attente de paiement. Une fois ce paiement reçu et validé, nous vous enverrons votre colis.</p>
+            <p>Pour toute question ou renseignement concernant un paiement ou l'état de votre commande, n'hésitez pas à nous contacter par mail à <a href="mailto:contact@steptosuccess.fr">contact@steptosuccess.fr</a></p>
+        </div>
+    </div>
+    </main>
+	<footer class="footer-section" style="background-color: rgb(33,37,41);">
+		<div class="container">
+            <div>
+                <div class="footer-widget contact-widget text-center" style="color: white;">
+                    <h2>Infos pratiques</h2>
+                    <div class="con-info">
+                        <span>Nom vendeur</span>
+                        <p>Alexandre Gaillot</p>
+                    </div>
+                    <div class="con-info">
+                        <span>Adresse</span>
+                        <p>1 rue du Fossé Mignard 77700 Chessy</p>
+                    </div>
+                    <div class="con-info">
+                        <span>Téléphone</span>
+                        <p>+33(0) 625566616</p>
+                    </div>
+                    <div class="con-info">
+                        <span>Mail</span>
+                        <p>contact@steptosuccess.fr</p>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</footer>
+    </body>
+</html>

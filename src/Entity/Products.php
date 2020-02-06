@@ -104,9 +104,15 @@ class Products
      */
     private $stocksList;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="product_id")
+     */
+    private $listLignesCommande;
+
     public function __construct()
     {
         $this->stocksList = new ArrayCollection();
+        $this->listLignesCommande = new ArrayCollection();
     }
 
     public function getSlug(): string
@@ -498,6 +504,37 @@ class Products
             // set the owning side to null (unless already changed)
             if ($stocksList->getCardId() === $this) {
                 $stocksList->setCardId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|LigneCommande[]
+     */
+    public function getListLignesCommande(): Collection
+    {
+        return $this->listLignesCommande;
+    }
+
+    public function addListLignesCommande(LigneCommande $listLignesCommande): self
+    {
+        if (!$this->listLignesCommande->contains($listLignesCommande)) {
+            $this->listLignesCommande[] = $listLignesCommande;
+            $listLignesCommande->setProductId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListLignesCommande(LigneCommande $listLignesCommande): self
+    {
+        if ($this->listLignesCommande->contains($listLignesCommande)) {
+            $this->listLignesCommande->removeElement($listLignesCommande);
+            // set the owning side to null (unless already changed)
+            if ($listLignesCommande->getProductId() === $this) {
+                $listLignesCommande->setProductId(null);
             }
         }
 

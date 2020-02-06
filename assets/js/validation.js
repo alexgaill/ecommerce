@@ -80,9 +80,12 @@ $("#commander").click(function(){
     let livraison = $("input:checked").val();
 
     if (livraison == "livraison") {
-        tarif=$("#selectTarif").val();
+        tarifValue=$("#selectTarif").val();
+        tarif = tarifValue.split('/')[1];
+        typeLivraison = tarifValue.split('/')[0];
     }else{
         tarif=0.00;
+        typeLivraison = null;
     }
 
     let paiement = $("#typePaiement").val();
@@ -90,6 +93,7 @@ $("#commander").click(function(){
     let data = {
         user,
         livraison,
+        typeLivraison,
         tarif,
         paiement
     }
@@ -99,5 +103,8 @@ $("#commander").click(function(){
         method:"POST",
         dataType:"json",
         data
+    })
+    .done(function(){
+        document.location = "./thanks";
     })
 })
