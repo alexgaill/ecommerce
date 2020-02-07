@@ -22,13 +22,34 @@ use Symfony\Component\Security\Core\Security;
 class BasketController extends AbstractController
 {
     /**
-     * @Route("/", name="basket")
-     * @return Response
+     * @var mixed
      */
-    public function index(SessionInterface $session)
+    private $session;
+
+    /**
+     * @var mixed
+     */
+    private $request;
+
+    /**
+     * @var mixed
+     */
+    private $productsRepository;
+
+    public function __construc(SessionInterface $session, Request $request, ProductsRepository $productsRepository)
     {
-        $panier = $session->get('panier');
-        $total = $session->get('total');
+        $this->session = $session;
+        $this->request = $request;
+        $this->productsRepository = $productsRepository;
+    }
+
+    /**
+     * @Route("/", name="basket")
+     */
+    public function index()
+    {
+        $panier = $this->session->get('panier');
+        $total = $this->session->get('total');
         return $this->render('basket/index.html.twig',[
             'panier' => $panier,
             'total' => $total
@@ -37,14 +58,15 @@ class BasketController extends AbstractController
 
     /** 
     * @Route("/add/{id}", name="basket_add")
-    **/
-    public function addToBasket(SessionInterface $session, Request $request, $id, ProductsRepository $repository)
+    * @param mixed $id
+    */
+    public function addToBasket($id)
     {
-        $product = $repository->find($id);
+        $product = $this->productsRepository->find($id);
         $price = $product->getPrice();
-        $panier = $session->get('panier', []);
+        $panier = $this->session->get('panier', []);
         
-        $form = $request->request;
+        $form = $this->request->request;
         $quantity = $form->all();
         $quantity = array_chunk($quantity, 4, true);
 
@@ -63,10 +85,10 @@ class BasketController extends AbstractController
                 'correct' => intval($type["correct".$key]),
                 'occasion' => intval($type["occasion".$key]),
                 'abimee' => intval($type["abimee".$key]),
-                'totalNew' => round(intval($price * intval($type["new".$key])), 2),
-                'totalCorrect' => round(($price * intval($type["correct".$key]) * 0.9), 2),
-                'totalOccasion' => round(($price * intval($type["occasion".$key]) * 0.8), 2),
-                'totalAbimee' => round(($price * intval($type["abimee".$key]) * 0.6), 2),
+                'totalNew' => round($price * $type["new".$key], 2),
+                'totalCorrect' => round(($price * $type["correct".$key] * 0.9), 2),
+                'totalOccasion' => round(($price * $type["occasion".$key] * 0.8), 2),
+                'totalAbimee' => round(($price * $type["abimee".$key] * 0.6), 2),
                 'poids' => 2 * (intval($type["new".$key]) + intval($type["correct".$key]) + intval($type["occasion".$key]) + intval($type["abimee".$key])),
                 'total' => $price * intval($type["new".$key]) + 
                             $price * intval($type["correct".$key]) * 0.9 + 
@@ -83,38 +105,40 @@ class BasketController extends AbstractController
             $total += $article["total"];
         }
         
-        $session->set('poids', $poids);
-        $session->set('total', $total);
-        $session->set('panier', $panier);
+        $this->session->set('poids', $poids);
+        $this->session->set('total', $total);
+        $this->session->set('panier', $panier);
 
-        return $this->redirectToRoute('basket');
+        return $this->redirectToRoute('/');
     }
 
     /** 
     * @Route("/remove/{id}{type}", name="basket_remove")
+    * @param mixed $id
+    * @param string $type
     **/
-    public function removeFromBasket (SessionInterface $session, $id, $type)
+    public function removeFromBasket ($id, $type)
     {
-        $panier = $session->get('panier', []);
-        $poids = $session->get('poids');
-        $total = $session->get('total');
+        $panier = $this->session->get('panier', []);
+        $poids = $this->session->get('poids');
+        $total = $this->session->get('total');
         $poids -= $panier[$id.$type]['poids']; 
         $total -= $panier[$id.$type]['total']; 
         unset($panier[$id.$type]);
-        $session->set('panier', $panier);
-        $session->set('poids', $poids);
-        $session->set('total', $total);
+        $this->session->set('panier', $panier);
+        $this->session->set('poids', $poids);
+        $this->session->set('total', $total);
         return $this->redirectToRoute('basket');
     }
 
     /**
      * @Route("/validation", name="validation")
      */
-    public function validation(SessionInterface $session)
+    public function validation()
     {
-        $panier = $session->get('panier', []);
-        $poids = $session->get('poids');
-        $total = $session->get('total');
+        $panier = $this->session->get('panier', []);
+        $poids = $this->session->get('poids');
+        $total = $this->session->get('total');
 
         return $this->render('basket/validation.html.twig', [
             'panier' => $panier,
@@ -126,15 +150,15 @@ class BasketController extends AbstractController
     /**
      * @Route("/saveCommande", name="save_commande")
      */
-    public function saveCommande(SessionInterface $session, Request $request, EntityManagerInterface $manager, 
-                                ProductsRepository $productsRepository, UserRepository $userRepository, StockRepository $stockRepository, 
+    public function saveCommande(EntityManagerInterface $manager, 
+                                UserRepository $userRepository, StockRepository $stockRepository, 
                                 Security $security, CommandeNotification $notification)
     {
-        $data = $request->request;
+        $data = $this->request->request;
         $dataUser = $data->get('user');
-        $panier = $session->get('panier', []);
-        $poids = $session->get('poids');
-        $total = $session->get('total');
+        $panier = $this->session->get('panier', []);
+        $poids = $this->session->get('poids');
+        $total = $this->session->get('total');
 
         if ($dataUser != null) {
             $user = $userRepository->findOneBy(['nom' => $dataUser['nom']]);
@@ -146,6 +170,8 @@ class BasketController extends AbstractController
                 ->setAdresse($dataUser["adresse"])
                 ->setCodePostal($dataUser["codePostal"])
                 ->setVille($dataUser["ville"]);
+            
+                $manager->persist($user);
         }else{
             $user = $security->getUser();
         }
@@ -165,7 +191,7 @@ class BasketController extends AbstractController
         $manager->persist($commande);
 
         foreach ($panier as $ligne) {
-            $productLine = $productsRepository->find($ligne["id"]);
+            $productLine = $this->productsRepository->find($ligne["id"]);
             $ligneCommande = new LigneCommande();
             $ligneCommande  ->setProductId($productLine)
                             ->setCommandeId($commande)
@@ -198,11 +224,12 @@ class BasketController extends AbstractController
     /**
      * @Route("/thanks", name="thanks")
      */
-    public function thanks(SessionInterface $session)
+    public function thanks()
     {
-        $session->set('panier', []);
-        $session->set('poids', '');
-        $session->set('total', '');
+        $this->session->set('panier', []);
+        $this->session->set('poids', '');
+        $this->session->set('total', '');
+
         return $this->render('basket/thanks.html.twig');
     }
 

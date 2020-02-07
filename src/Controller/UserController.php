@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Notification\InscriptionNotification;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +17,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserController extends AbstractController
 {
+    /**
+     * @var mixed
+     */
+    private $manager;
+
+    public function __construct(EntityManagerInterface $manager)
+    {
+        $this->manager = $manager;
+    }
      /**
      * @Route("/login", name="login")
-     * @return Response
      */
     public function login()
     {
@@ -27,12 +36,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/signup", name="signup")
-     * @return Response
      */
-    public function signup(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, InscriptionNotification $notification)
+    public function signup(Request $request, UserPasswordEncoderInterface $encoder, InscriptionNotification $notification)
     {
         $user = new User();
-        $this->manager = $manager;
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -53,7 +60,7 @@ class UserController extends AbstractController
             $this->manager->flush();
             $notification->notify($user);
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('validationCreation');
         }
 
         return $this->render('user/signup.html.twig', [
@@ -78,9 +85,26 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/validationCompte/{token}", name="validationCompte")
+     * @Route("/validationCreation", name="validationCreation")
      */
-    public function validationCompte($token){
-        return $this->render('validation.html.twig');
+    public function validationCreation(){
+        return $this->render('user/create.html.twig');
+    }
+
+    /**
+     * @Route("/validationCompte/{token}", name="validationCompte")
+     * * @param string $token
+     */
+    public function validationCompte($token, UserRepository $repository){
+        $user = $repository->findOneBy(["code_validation" => $token]);
+
+        if (!is_null($user)){
+            $user->setValide(true);
+            dump($user);
+            $this->manager->persist($user);
+            $this->manager->flush();
+            return $this->render('user/accountValidate.html.twig');
+        }
+        return $this->render('home');
     }
 }

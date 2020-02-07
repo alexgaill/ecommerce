@@ -47,22 +47,29 @@ class ShopController extends AbstractController
      */
     public function shop(ProductsRepository $repository, StockRepository $repo, PaginatorInterface $paginator, Request $request) : Response
     {
-        $this->repository = $repository;
-        $this->repo = $repo;
+        if (!is_null($request->query->get('search')) && !empty($request->query->get('search'))) {
+            $products = $paginator->paginate(
+                $repository->findSearch($request->query->get('search')),
+                1,
+                24
+            );
+            dump($products);
+        } else {
+            $products = $paginator->paginate(
+                $repository->findAllGrouped(),
+                $request->query->getInt('page', 1),
+                24
+            );
+        }
 
-        $setCodes = $this->repository->set_codes();
-        $products = $paginator->paginate(
-            $this->repository->findAllGrouped(),
-            $request->query->getInt('page', 1),
-            24
-        );
+        $setCodes = $repository->set_codes();
 
-        $listStockType = $this->repo->listStockType();
+        $listStockType = $repo->listStockType();
 
-        $count=[$this->repository->countCard('new'), 
-                $this->repository->countCard('correct'),
-                $this->repository->countCard('occasion'),
-                $this->repository->countCard('abimee')
+        $count=[$repository->countCard('new'), 
+                $repository->countCard('correct'),
+                $repository->countCard('occasion'),
+                $repository->countCard('abimee')
                 ];
         return $this->render('shop/shop.html.twig', [
             'products' => $products,

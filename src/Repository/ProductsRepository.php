@@ -62,6 +62,26 @@ class ProductsRepository extends ServiceEntityRepository
         ;
     }
 
+        /**
+     * @return Query
+     */
+    public function findSearch($value): Query
+    {
+        return $this->createQueryBuilder('p')
+            ->orWhere('p.name = :val')
+            // ->orWhere('p.description = :val')
+            // ->orWhere('p.type = :val')
+            // ->orWhere('p.race = :val')
+            // ->orWhere('p.archetype = :val')
+            // ->orWhere('p.setName = :val')
+            // ->orWhere('p.setCode = :val')
+            // ->orWhere('p.attribute = :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('p.setCode')
+            ->getQuery()
+        ;
+    }
+
     /**
      * @return Products[]
      */
