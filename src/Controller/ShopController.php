@@ -50,7 +50,7 @@ class ShopController extends AbstractController
         if (!is_null($request->query->get('search')) && !empty($request->query->get('search'))) {
             $products = $paginator->paginate(
                 $repository->findSearch($request->query->get('search')),
-                1,
+                $request->query->getInt('page', 1),
                 24
             );
             dump($products);

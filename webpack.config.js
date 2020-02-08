@@ -32,6 +32,7 @@ Encore
     .addEntry('basket', './assets/js/basket.js')
     .addEntry('arrivage', './assets/js/arrivage.js')
     .addEntry('validation', './assets/js/validation.js')
+    .addEntry('tri', './assets/js/tri.js')
     .addEntry('owlcarousel', './assets/js/owl.carousel.min.js')
     .addEntry('zoom', './assets/js/jquery.zoom.min.js')
     .addEntry('main', './assets/js/main.js')

@@ -11,7 +11,7 @@
 							<li><a href="#">Liste des set</a>
 								<ul class="sub-menu" style="max-height:15rem;overflow:scroll;">
                                     {% for setCode in setCodes %}
-                                        <li><a href="#"> {{setCode.set}} <span>({{setCode.totalCard}})</span></a></li>
+                                        <li><a class="code"> {{setCode.set}} <span>({{setCode.totalCard}})</span></a></li>
                                     {% endfor %}
 								</ul>
 							</li>
