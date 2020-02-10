@@ -59,37 +59,37 @@
                             <label for="typeLivraison">Choisissez votre type de livraison</label>
                             <select name="typeLivraison" id="selectTarif">
                                 {% if poids <= 20 %}
-                                    <option value="simple/0.97">Lettre simple: 1.00€</option>
-                                    <option value="suivie/1.42">Lettre suivie: 1.45€</option>
-                                    <option value="recommandee/5.45">Lettre recommandée: 5.50€</option>
+                                    <option value="simple/1.00">Lettre simple: 1.00€</option>
+                                    <option value="suivie/1.45">Lettre suivie: 1.45€</option>
+                                    <option value="recommandee/5.50">Lettre recommandée: 5.50€</option>
                                 {% elseif poids <= 50 %}
-                                    <option value="simple/1.94">Lettre simple: 2.00€</option>
-                                    <option value="suivie/2.39">Lettre suivie: 2.45€</option>
-                                    <option value="recommandee/6.00">Lettre recommandée: 6.05€</option>
+                                    <option value="simple/2.00">Lettre simple: 2.00€</option>
+                                    <option value="suivie/2.45">Lettre suivie: 2.45€</option>
+                                    <option value="recommandee/6.05">Lettre recommandée: 6.05€</option>
                                 {% elseif poids <= 100 %}
-                                    <option value="simple/1.94">Lettre simple: 2.00€</option>
-                                    <option value="suivie/2.39">Lettre suivie: 2.45€</option>
-                                    <option value="recommandee/6.65">Lettre recommandée: 6.70€</option>
+                                    <option value="simple/2.00">Lettre simple: 2.00€</option>
+                                    <option value="suivie/2.45">Lettre suivie: 2.45€</option>
+                                    <option value="recommandee/6.70">Lettre recommandée: 6.70€</option>
                                 {% elseif poids <= 250 %}
-                                    <option value="simple/3.88">Lettre simple: 3.95€</option>
-                                    <option value="suivie/4.33">Lettre suivie: 4.40€</option>
-                                    <option value="recommandee/7.85">Lettre recommandée: 7.90€</option>
+                                    <option value="simple/3.95">Lettre simple: 3.95€</option>
+                                    <option value="suivie/4.40">Lettre suivie: 4.40€</option>
+                                    <option value="recommandee/7.90">Lettre recommandée: 7.90€</option>
                                 {% elseif poids <= 500 %}
-                                    <option value="simple/5.82">Lettre simple: 5.90€</option>
-                                    <option value="suivie/6.27">Lettre suivie: 6.35€</option>
-                                    <option value="recommandee/9.00">Lettre recommandée: 9.05€</option>
+                                    <option value="simple/5.90">Lettre simple: 5.90€</option>
+                                    <option value="suivie/6.35">Lettre suivie: 6.35€</option>
+                                    <option value="recommandee/9.05">Lettre recommandée: 9.05€</option>
                                 {% elseif poids <= 1000 %}
-                                    <option value="simple/7.76">Lettre simple: 7.80€</option>
-                                    <option value="suivie/8.21">Lettre suivie: 8.25€</option>
-                                    <option value="recommandee/10.15">Lettre recommandée: 10.20€</option>
+                                    <option value="simple/7.80">Lettre simple: 7.80€</option>
+                                    <option value="suivie/8.25">Lettre suivie: 8.25€</option>
+                                    <option value="recommandee/10.20">Lettre recommandée: 10.20€</option>
                                 {% elseif poids <= 2000 %}
-                                    <option value="simple/7.76">Lettre simple: 7.80€</option>
-                                    <option value="suivie/8.21">Lettre suivie: 8.25€</option>
-                                    <option value="recommandee/11.85">Lettre recommandée: 11.90€</option>
+                                    <option value="simple/7.80">Lettre simple: 7.80€</option>
+                                    <option value="suivie/8.25">Lettre suivie: 8.25€</option>
+                                    <option value="recommandee/11.90">Lettre recommandée: 11.90€</option>
                                 {% else %}
-                                    <option value="simple/7.76">Lettre simple: 7.80€</option>
-                                    <option value="suivie/8.21">Lettre suivie: 8.30€</option>
-                                    <option value="recommandee/13.08">Lettre recommandée: 13.15€</option>
+                                    <option value="simple/7.80">Lettre simple: 7.80€</option>
+                                    <option value="suivie/8.30">Lettre suivie: 8.30€</option>
+                                    <option value="recommandee/13.15">Lettre recommandée: 13.15€</option>
                                 {% endif %}
                             </select>
                             <p>Attention, votre commande sera envoyée une fois le règlement encaissé.</p>

@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-
-use App\Entity\User;
 use App\Entity\Entry;
 use App\Entity\Stock;
 use App\Entity\Arrivage;
+use App\Repository\CommandeRepository;
 use App\Repository\UserRepository;
 use App\Repository\StockRepository;
 use App\Repository\ProductsRepository;
@@ -25,11 +24,12 @@ class AdminController extends AbstractController
     /**
      * @Route("/commandes", name="commandes")
      */
-    public function commandes()
+    public function commandes(CommandeRepository $commandeRepository)
     {
-        // return $this->render('admin/index.html.twig', [
-        //     'controller_name' => 'AdminController',
-        // ]);
+        $commandes = $commandeRepository->findAll();
+        return $this->render('admin/commandes.html.twig', [
+            'commandes' => $commandes
+        ]);
     }
 
     /**
@@ -106,8 +106,6 @@ class AdminController extends AbstractController
             $manager->flush();
         }
 
-        // $date = new \DateTime();
-        // $formatDate = $date->format('Y-m-d H:i:s');
         $arrivage = new Arrivage();
         $arrivage->setName($request->get('nomArrivage'))
                 ->setCreatedAt(new \DateTime())
@@ -168,11 +166,7 @@ class AdminController extends AbstractController
             $manager->persist($arrivage);
             $manager->flush();
 
-            
-
         }
-
-
         return new JsonResponse($total);
     }
 }

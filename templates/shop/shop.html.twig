@@ -40,25 +40,25 @@
 						<h2 class="fw-title">Etat</h2>
 						<div class="etat">
 							<div>
-								<input type="checkbox" name="etat" id="neuf">
+								<input type="checkbox" name="etat" data-etat="new" id="neuf">
 								<label for="neuf">Neuves
 									<span>({{count.0.new}})</span>
 								</label>
 							</div>
 							<div>
-								<input type="checkbox" name="etat" id="correct">
+								<input type="checkbox" name="etat" data-etat="correct" id="correct">
 								<label for="correct">Correctes
 									<span>({{count.1.correct}})</span>
 								</label>
 							</div>
 							<div>
-								<input type="checkbox" name="etat" id="occasion">
+								<input type="checkbox" name="etat" data-etat="occasion" id="occasion">
 								<label for="occasion">Occasions
 									<span>({{count.2.occasion}})</span>
 								</label>
 							</div>
 							<div>
-								<input type="checkbox" name="etat" id="abimee">
+								<input type="checkbox" name="etat" data-etat="abimee" id="abimee">
 								<label for="abimee">Abimées
 									<span>({{count.3.abimee}})</span>
 								</label>
@@ -71,14 +71,23 @@
 						<div class="etat">
 							{% for stockType in listStockType %}
 								<div>
-									<input type="checkbox" name="etat" id="{{ stockType.stockType}}">
+								{% if stockType.stockType == "Française" %}
+									<input type="checkbox" name="type" data-type="Francaise" id="{{ stockType.stockType}}">
 									<label for="{{ stockType.stockType}}">{{ stockType.stockType}}</label>
+								{% else %}
+									<input type="checkbox" name="type" data-type="{{ stockType.stockType}}" id="{{ stockType.stockType}}">
+									<label for="{{ stockType.stockType}}">{{ stockType.stockType}}</label>
+								{% endif %}
 								</div>
 							{% endfor %}							
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
+					{% if products is empty %}
+					<h4>Votre recherche est trop sélective. Aucune carte ne correspond.</h4>
+					<p>Essayez avec une recherche plus large.</p>
+					{% endif %}
 					<div class="row">
 						{% for product in products %}
 							<div class="col-lg-4 col-sm-6">

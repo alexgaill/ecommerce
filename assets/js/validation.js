@@ -29,7 +29,7 @@ $("#modifierUser").click(function(e){
 $("input[name=livraison]").change(function(){
     if ($(this).val() == "livraison") {
         $("#tarifLivraison").removeClass("d-none");
-        $("#recapLivraison").text($("#selectTarif").val());
+        $("#recapLivraison").text($("#selectTarif").val().split('/')[1]);
         $("#totalFinal").text((parseFloat($("#recapLivraison").text()) + parseFloat($("#recapPanier").text())).toFixed(2));
 
     }else{
@@ -44,7 +44,7 @@ $("input[name=livraison]").change(function(){
  * Modifie tarif panier en fonction du type de livraison choisi
  */
 $("#selectTarif").change(function(){
-    $("#recapLivraison").text($("#selectTarif").val());
+    $("#recapLivraison").text($("#selectTarif").val().split('/')[1]);
     $("#totalFinal").text((parseFloat($("#recapLivraison").text()) + parseFloat($("#recapPanier").text())).toFixed(2));
 })
 

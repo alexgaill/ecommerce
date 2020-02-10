@@ -22,34 +22,12 @@ use Symfony\Component\Security\Core\Security;
 class BasketController extends AbstractController
 {
     /**
-     * @var mixed
-     */
-    private $session;
-
-    /**
-     * @var mixed
-     */
-    private $request;
-
-    /**
-     * @var mixed
-     */
-    private $productsRepository;
-
-    public function __construc(SessionInterface $session, Request $request, ProductsRepository $productsRepository)
-    {
-        $this->session = $session;
-        $this->request = $request;
-        $this->productsRepository = $productsRepository;
-    }
-
-    /**
      * @Route("/", name="basket")
      */
-    public function index()
+    public function index(SessionInterface $session)
     {
-        $panier = $this->session->get('panier');
-        $total = $this->session->get('total');
+        $panier = $session->get('panier');
+        $total = $session->get('total');
         return $this->render('basket/index.html.twig',[
             'panier' => $panier,
             'total' => $total
@@ -60,13 +38,14 @@ class BasketController extends AbstractController
     * @Route("/add/{id}", name="basket_add")
     * @param mixed $id
     */
-    public function addToBasket($id)
+    public function addToBasket($id, ProductsRepository $productsRepository, SessionInterface $session, Request $request)
     {
-        $product = $this->productsRepository->find($id);
+
+        $product = $productsRepository->find($id);
         $price = $product->getPrice();
-        $panier = $this->session->get('panier', []);
+        $panier = $session->get('panier', []);
         
-        $form = $this->request->request;
+        $form = $request->request;
         $quantity = $form->all();
         $quantity = array_chunk($quantity, 4, true);
 
@@ -105,11 +84,11 @@ class BasketController extends AbstractController
             $total += $article["total"];
         }
         
-        $this->session->set('poids', $poids);
-        $this->session->set('total', $total);
-        $this->session->set('panier', $panier);
+        $session->set('poids', $poids);
+        $session->set('total', $total);
+        $session->set('panier', $panier);
 
-        return $this->redirectToRoute('/');
+        return $this->redirectToRoute('basket');
     }
 
     /** 
@@ -117,28 +96,28 @@ class BasketController extends AbstractController
     * @param mixed $id
     * @param string $type
     **/
-    public function removeFromBasket ($id, $type)
+    public function removeFromBasket ($id, $type, SessionInterface $session)
     {
-        $panier = $this->session->get('panier', []);
-        $poids = $this->session->get('poids');
-        $total = $this->session->get('total');
+        $panier = $session->get('panier', []);
+        $poids = $session->get('poids');
+        $total = $session->get('total');
         $poids -= $panier[$id.$type]['poids']; 
         $total -= $panier[$id.$type]['total']; 
         unset($panier[$id.$type]);
-        $this->session->set('panier', $panier);
-        $this->session->set('poids', $poids);
-        $this->session->set('total', $total);
+        $session->set('panier', $panier);
+        $session->set('poids', $poids);
+        $session->set('total', $total);
         return $this->redirectToRoute('basket');
     }
 
     /**
      * @Route("/validation", name="validation")
      */
-    public function validation()
+    public function validation(SessionInterface $session)
     {
-        $panier = $this->session->get('panier', []);
-        $poids = $this->session->get('poids');
-        $total = $this->session->get('total');
+        $panier = $session->get('panier', []);
+        $poids = $session->get('poids');
+        $total = $session->get('total');
 
         return $this->render('basket/validation.html.twig', [
             'panier' => $panier,
@@ -150,15 +129,15 @@ class BasketController extends AbstractController
     /**
      * @Route("/saveCommande", name="save_commande")
      */
-    public function saveCommande(EntityManagerInterface $manager, 
-                                UserRepository $userRepository, StockRepository $stockRepository, 
+    public function saveCommande(EntityManagerInterface $manager, Request $request, SessionInterface $session,
+                                UserRepository $userRepository, StockRepository $stockRepository, ProductsRepository $productsRepository,
                                 Security $security, CommandeNotification $notification)
     {
-        $data = $this->request->request;
+        $data = $request->request;
         $dataUser = $data->get('user');
-        $panier = $this->session->get('panier', []);
-        $poids = $this->session->get('poids');
-        $total = $this->session->get('total');
+        $panier = $session->get('panier', []);
+        $poids = $session->get('poids');
+        $total = $session->get('total');
 
         if ($dataUser != null) {
             $user = $userRepository->findOneBy(['nom' => $dataUser['nom']]);
@@ -191,7 +170,7 @@ class BasketController extends AbstractController
         $manager->persist($commande);
 
         foreach ($panier as $ligne) {
-            $productLine = $this->productsRepository->find($ligne["id"]);
+            $productLine = $productsRepository->find($ligne["id"]);
             $ligneCommande = new LigneCommande();
             $ligneCommande  ->setProductId($productLine)
                             ->setCommandeId($commande)
@@ -224,23 +203,13 @@ class BasketController extends AbstractController
     /**
      * @Route("/thanks", name="thanks")
      */
-    public function thanks()
+    public function thanks(SessionInterface $session)
     {
-        $this->session->set('panier', []);
-        $this->session->set('poids', '');
-        $this->session->set('total', '');
+        $session->set('panier', []);
+        $session->set('poids', '');
+        $session->set('total', '');
 
         return $this->render('basket/thanks.html.twig');
     }
 
-    /**
-     * @Route("/test", name="test")
-     */
-    // public function test(UserRepository $user)
-    // {
-    //     $user = $user->find(1);
-    //     return $this->render('emails/inscription.html.twig', [
-    //         'user' => $user
-    //     ]);
-    // }
 }

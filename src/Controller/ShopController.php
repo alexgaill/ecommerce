@@ -53,7 +53,7 @@ class ShopController extends AbstractController
                 $request->query->getInt('page', 1),
                 24
             );
-            dump($products);
+
         } else {
             $products = $paginator->paginate(
                 $repository->findAllGrouped(),
@@ -61,6 +61,75 @@ class ShopController extends AbstractController
                 24
             );
         }
+
+        if (!is_null($request->query->get('setCode')) && !empty($request->query->get('setCode'))) {
+            
+            $newList = [];
+            foreach ($products as $product) {
+                if ($product->getSetCode() == $request->query->get('setCode')) {
+                    $newList[$product->getId()] = $product;
+                }
+            }
+            $products = $paginator->paginate(
+                $newList,
+                $request->query->getInt('page', 1),
+                24
+            );
+        }
+
+        if (!is_null($request->query->get('type')) && !empty($request->query->get('type'))) {
+            $listType = explode(',', $request->query->get('type'));
+            $productsWithResearch = [];
+            foreach ($listType as $type) {
+                foreach ($products as $product) {
+                    foreach ($product->getStocksList() as $stockLine) {
+                        if($stockLine->getStockType() == $type)
+                        $productsWithResearch[$product->getId()] = $product;
+                    }
+                }
+            }
+             $products = $paginator->paginate(
+                $productsWithResearch,
+                $request->query->getInt('page', 1),
+                24
+            );
+        }
+        if (!is_null($request->query->get('etat')) && !empty($request->query->get('etat'))) {
+            $listEtat = explode(',', $request->query->get('etat'));
+            $productsWithResearch = [];
+            foreach ($listEtat as $etat) {
+                foreach ($products as $product) {
+                    foreach ($product->getStocksList() as $stockLine) {
+                        if ($etat == "new") {
+                            if($stockLine->getNew() > 0){
+                                $productsWithResearch[$product->getId()] = $product;
+                            }
+                        }
+                        if ($etat == "correct") {
+                            if($stockLine->getCorrect() > 0){
+                                $productsWithResearch[$product->getId()] = $product;
+                            }
+                        }
+                        if ($etat == "occasion") {
+                            if($stockLine->getOccasion() > 0){
+                                $productsWithResearch[$product->getId()] = $product;
+                            }
+                        }
+                        if ($etat == "abimee") {
+                            if($stockLine->getAbimee() > 0){
+                                $productsWithResearch[$product->getId()] = $product;
+                            }
+                        }
+                    }
+                }
+            }
+             $products = $paginator->paginate(
+                $productsWithResearch,
+                $request->query->getInt('page', 1),
+                24
+            );
+        }
+
 
         $setCodes = $repository->set_codes();
 
@@ -71,6 +140,7 @@ class ShopController extends AbstractController
                 $repository->countCard('occasion'),
                 $repository->countCard('abimee')
                 ];
+        dump($products);
         return $this->render('shop/shop.html.twig', [
             'products' => $products,
             'setCodes' => $setCodes,
