@@ -18,6 +18,7 @@
             <td>Montant Total</td>
             <td>Type Paiement</td>
             <td>Etat</td>
+            <td>#</td>
         </thead>
         <tbody>
             {% for commande in commandes %}
@@ -33,6 +34,15 @@
                 <td>{{ commande.montantTotal }}</td>
                 <td>{{ commande.typePaiement }}</td>
                 <td>{{ commande.statut }}</td>
+                <td>
+                    <select class="statutCommande" id="{{ commande.id }}">
+                        <option value="attente">Attente</option>
+                        <option value="payee">Payée</option>
+                        <option value="envoyee">Envoyée</option>
+                        <option value="livree">Livrée</option>
+                        <option value="erreur">Erreur</option>
+                    </select>
+                </td>
                 </tr>
             {% endfor %}
         </tbody>

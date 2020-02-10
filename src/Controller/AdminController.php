@@ -24,8 +24,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/commandes", name="commandes")
      */
-    public function commandes(CommandeRepository $commandeRepository)
+    public function commandes(CommandeRepository $commandeRepository, Request $request, EntityManagerInterface $manager)
     {
+        if (!is_null($request->request->get('statut')) && !empty($request->request->get('statut'))) {
+            $commande = $commandeRepository->find($request->request->get('id'));
+            $commande->setStatut($request->request->get('statut'));
+            $manager->flush();
+        }
         $commandes = $commandeRepository->findAll();
         return $this->render('admin/commandes.html.twig', [
             'commandes' => $commandes

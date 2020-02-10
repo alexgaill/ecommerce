@@ -184,3 +184,15 @@ $.ajax({
     })
 
 })
+
+$(".statutCommande").change(function(){
+    $.ajax({
+        url: "./commandes",
+        method:"POST",
+        dataType:"json",
+        data:{
+            id : $(this).attr('id'),
+            statut: $(this).val()
+        }
+    })
+})
