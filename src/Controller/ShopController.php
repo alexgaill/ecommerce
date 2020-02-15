@@ -140,7 +140,7 @@ class ShopController extends AbstractController
                 $repository->countCard('occasion'),
                 $repository->countCard('abimee')
                 ];
-                
+
         return $this->render('shop/shop.html.twig', [
             'products' => $products,
             'setCodes' => $setCodes,
@@ -197,7 +197,7 @@ class ShopController extends AbstractController
             array_push($entry, $product->getSlug());
             array_push($datas, $entry);
         }
-        dump($datas);
+        
         return $this->render('shop/arrivage.html.twig', [
             'products' => $datas
         ]);

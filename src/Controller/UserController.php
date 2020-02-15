@@ -100,7 +100,6 @@ class UserController extends AbstractController
 
         if (!is_null($user)){
             $user->setValide(true);
-            dump($user);
             $this->manager->persist($user);
             $this->manager->flush();
             return $this->render('user/accountValidate.html.twig');
