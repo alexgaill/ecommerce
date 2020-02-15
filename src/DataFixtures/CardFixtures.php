@@ -5,13 +5,13 @@ namespace App\DataFixtures;
 use App\Entity\Stock;
 use App\Entity\Products;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CardFixtures extends Fixture
 {
      
 
-    public function load(ObjectManager $manager)
+    public function load(EntityManagerInterface $manager)
     {
         $url = "https://db.ygoprodeck.com/api/v5/cardinfo.php?la=french";
         $infos = file_get_contents($url);
