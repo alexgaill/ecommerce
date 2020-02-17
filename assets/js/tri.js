@@ -6,9 +6,6 @@ function writeParam(paramValue, paramName){
         let arrayParams = params[1].split('&');
         let paramExist = false;
         let newParams = "?";
-        console.log(paramValue);
-        console.log(paramName);
-
 
         for (const param of arrayParams) {
             if (param.split('=')[0] == paramName ){

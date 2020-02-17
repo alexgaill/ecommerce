@@ -59,7 +59,6 @@ class UserController extends AbstractController
             $this->manager->persist($user);
             $this->manager->flush();
             $notification->notify($user);
-
             return $this->redirectToRoute('validationCreation');
         }
 

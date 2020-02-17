@@ -48,33 +48,22 @@ class ShopController extends AbstractController
     public function shop(ProductsRepository $repository, StockRepository $repo, PaginatorInterface $paginator, Request $request) : Response
     {
         if (!is_null($request->query->get('search')) && !empty($request->query->get('search'))) {
-            $products = $paginator->paginate(
-                $repository->findSearch($request->query->get('search')),
-                $request->query->getInt('page', 1),
-                24
-            );
+            
+            $products = $repository->findSearch($request->query->get('search'));
 
         } else {
-            $products = $paginator->paginate(
-                $repository->findAllGrouped(),
-                $request->query->getInt('page', 1),
-                24
-            );
+            $products = $repository->findAll();
         }
 
         if (!is_null($request->query->get('setCode')) && !empty($request->query->get('setCode'))) {
             
             $newList = [];
             foreach ($products as $product) {
-                if ($product->getSetCode() == $request->query->get('setCode')) {
+                if (substr($product->getSetCode(), 0, 4) == $request->query->get('setCode')) {
                     $newList[$product->getId()] = $product;
                 }
             }
-            $products = $paginator->paginate(
-                $newList,
-                $request->query->getInt('page', 1),
-                24
-            );
+            $products = $newList;
         }
 
         if (!is_null($request->query->get('type')) && !empty($request->query->get('type'))) {
@@ -83,16 +72,15 @@ class ShopController extends AbstractController
             foreach ($listType as $type) {
                 foreach ($products as $product) {
                     foreach ($product->getStocksList() as $stockLine) {
-                        if($stockLine->getStockType() == $type)
+                        if ($type == "Francaise") {
+                            $type = "Française";
+                        }
+                        if($stockLine->getStockType() == $type )
                         $productsWithResearch[$product->getId()] = $product;
                     }
                 }
             }
-             $products = $paginator->paginate(
-                $productsWithResearch,
-                $request->query->getInt('page', 1),
-                24
-            );
+             $products = $productsWithResearch;
         }
         if (!is_null($request->query->get('etat')) && !empty($request->query->get('etat'))) {
             $listEtat = explode(',', $request->query->get('etat'));
@@ -123,13 +111,14 @@ class ShopController extends AbstractController
                     }
                 }
             }
-             $products = $paginator->paginate(
-                $productsWithResearch,
-                $request->query->getInt('page', 1),
-                24
-            );
+             $products = $productsWithResearch;
         }
 
+        $products = $paginator->paginate(
+            $products,
+            $request->query->getInt('page', 1),
+            24
+        );
 
         $setCodes = $repository->set_codes();
 

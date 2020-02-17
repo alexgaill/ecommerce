@@ -1,4 +1,4 @@
 #!/bin/sh
-rsync -av ./ u96878365@access778180339.webspace-data.io:~/portfolio/ycs 
+rsync -av ./ u96878365@access778180339.webspace-data.io:~/ycs 
 --include=public/build --include=vendor --include=public/\.htaccess
 --exclude-from=.gitignore --exclude=".*"
