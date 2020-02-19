@@ -271,9 +271,9 @@ class User implements UserInterface
         return $this;
     }
 
-    public function createCode($nom, $createdAt)
+    public function createCode($email, $createdAt)
     {
-        return hash('sha256', ($nom.$createdAt));
+        return hash('sha256', ($email.$createdAt));
     }
 
     public function eraseCredentials() {}
@@ -281,7 +281,7 @@ class User implements UserInterface
     public function getSalt() {}
 
     public function getRoles() {
-        if ( $this->id == 1 || $this->id == 6) {
+        if ( $this->email == 'contact@steptosuccess.fr') {
             return ['ROLE_ADMIN'];
         } else {
             return ['ROLE_USER'];

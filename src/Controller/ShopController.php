@@ -52,7 +52,7 @@ class ShopController extends AbstractController
             $products = $repository->findSearch($request->query->get('search'));
 
         } else {
-            $products = $repository->findAll();
+            $products = $repository->findAllGrouped();
         }
 
         if (!is_null($request->query->get('setCode')) && !empty($request->query->get('setCode'))) {

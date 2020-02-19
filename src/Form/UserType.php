@@ -27,9 +27,6 @@ class UserType extends AbstractType
             ->add('telephone', null, ['label' => false])
             ->add('password', PasswordType::Class, ['label' => false])
             ->add('password_verify', PasswordType::Class, ['label' => false])
-            // ->add('code_validation')
-            // ->add('valide')
-            // ->add('created_at')
         ;
     }
 

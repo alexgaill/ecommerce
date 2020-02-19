@@ -5,7 +5,7 @@ namespace App\Notification;
 use App\Entity\User;
 use Twig\Environment;
 
-class InscriptionNotification
+class ForgetPasswordNotification
 {
     private $mailer;
     private $renderer;
@@ -23,10 +23,10 @@ class InscriptionNotification
      */
     public function notify(User $user)
     {
-            $message = new \Swift_Message('Validation de votre inscription sur YCS');
+            $message = new \Swift_Message('Réinitialisation de votre mot de passe sur YCS');
             $message->setFrom('contact@steptosuccess.fr', 'YCS')
             ->setTo($user->getEmail())
-            ->setBody($this->renderer->render('emails/inscription.html.twig',[
+            ->setBody($this->renderer->render('emails/forgetPassword.html.twig',[
                 'user' => $user
                 ]), 'text/html');
             $this->mailer->send($message);
