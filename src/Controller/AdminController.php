@@ -174,4 +174,45 @@ class AdminController extends AbstractController
         }
         return new JsonResponse($total);
     }
+
+    /**
+     * @Route("/products", name="products")
+     */
+    public function products(ProductsRepository $productsRepository)
+    {
+        $products = $productsRepository->findAll();
+        $emptyProducts = array();
+
+        foreach ($products as $product) {
+            if (is_null($product->getImg()) || is_null($product->getImgSmall()) || 
+                is_null($product->getSetCode()) || is_null($product->getSetName()) || 
+                $product->getCost() == 0 || $product->getPrice() == 0  || 
+                $product->getSetRarity() == 0 || is_null($product->getSetRarity()))
+            {
+                array_push($emptyProducts, $product);
+            }
+        }
+
+        return $this->render('admin/products.html.twig', [
+            'emptyProducts' => $emptyProducts
+        ]);
+    }
+
+    /**
+     * @Route("/productInfos/{id}", name="productInfos")
+     * @param int $id
+     */
+    public function productInfos ($id, ProductsRepository $productsRepository)
+    {
+        $product = $productsRepository->find($id);
+
+        $url = "https://db.ygoprodeck.com/api/v5/cardinfo.php?la=french?name=" . $product->getName();
+        $infos = file_get_contents($url);
+        $card = json_decode($infos);
+
+        return $this->render('admin/productInfos.html.twig', [
+            'product' => $product,
+            'card' => $card
+        ]);
+    }
 }

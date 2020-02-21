@@ -37,16 +37,6 @@ class Products
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $img;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $imgSmall;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
     private $race;
 
     /**
@@ -65,7 +55,7 @@ class Products
     private $setCode;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $setRarity;
 
@@ -109,10 +99,16 @@ class Products
      */
     private $listLignesCommande;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Images", mappedBy="products_id")
+     */
+    private $images;
+
     public function __construct()
     {
         $this->stocksList = new ArrayCollection();
         $this->listLignesCommande = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getSlug(): string
@@ -215,46 +211,6 @@ class Products
     public function setType($type)
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImg()
-    {
-        return $this->img;
-    }
-
-    /**
-     * @param mixed $img
-     *
-     * @return self
-     */
-    public function setImg($img)
-    {
-        $this->img = $img;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImgSmall()
-    {
-        return $this->imgSmall;
-    }
-
-    /**
-     * @param mixed $imgSmall
-     *
-     * @return self
-     */
-    public function setImgSmall($imgSmall)
-    {
-        $this->imgSmall = $imgSmall;
 
         return $this;
     }
@@ -536,6 +492,34 @@ class Products
             if ($listLignesCommande->getProductId() === $this) {
                 $listLignesCommande->setProductId(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->addProductsId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            $image->removeProductsId($this);
         }
 
         return $this;

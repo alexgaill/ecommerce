@@ -65,10 +65,13 @@
 					{% if  is_granted('ROLE_USER') %}
 						{# <li><a href="{{ path('collection')}}">Ma collection</a></li> #}
 						{# <li><a href="{{ path('account')}}">Mon Compte</a></li> #}
+						{# <li><a href="{{ path('historique')}}">Commandes</a></li> #}
+
 
 					{% elseif is_granted('ROLE_ADMIN') %}
 						<li><a href="{{ path('commandes')}}">Commandes</a></li>
 						<li><a href="{{ path('achats')}}">Nouvel arrivage</a></li>
+						<li><a href="{{ path('products') }}">Cartes</a></li>
 					{% endif %}
 					<!-- <li><a href="#">Jewelry
 						<span class="new">New</span>

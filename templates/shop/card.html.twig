@@ -5,12 +5,25 @@
         <div class="row spad">
             <div class="col-6 border-right">
                 <div class="row">
-                    <div class="col-6">
-                        {% if product.imgSmall is not null %}
-                            <img src="{{product.imgSmall}}" alt="{{product.name}}">
-                        {% else %}
-                            <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
-                        {% endif %}
+                    <div class="col-6 column">
+                        <div class="border">
+                            {% if product.getImages is not null %}
+                            <img src="{{product.getImages[0].url}}" alt="{{product.name}}" id="imgBig">
+                            {% else %}
+                            <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}" id="imgBig">
+                            {% endif %}
+                        </div>
+                        <div class="row mt-5" id="listImg">
+                            {% if product.getImages is not null %}
+                                {% for imgSmall in product.getImages %}
+                                    <div class="col-3 border">
+                                        <img src="{{imgSmall.urlSmall}}" alt="{{product.name}}">
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="col-6">
                         <div class="column">
@@ -28,6 +41,7 @@
                                     <p>DEF: {{product.def}}</p>
                                 </div>
                             {% endif %}
+                            <p>{{ product.description}}</p>
                         </div>
                     </div>
                 </div>
@@ -100,7 +114,7 @@
                                 <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                             <tr>
-                                <td>Correcte</td>
+                                <td>Bonne</td>
                                 {% if stock.correct > 2 %}
                                     <td class="text-success">En stock</td>
                                 {% elseif stock.correct > 0 %}
@@ -119,7 +133,7 @@
                                 <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                             <tr>
-                                <td>Occasion</td>
+                                <td>Correcte</td>
                                 {% if stock.occasion > 2 %}
                                     <td class="text-success">En stock</td>
                                 {% elseif stock.occasion > 0 %}
@@ -138,7 +152,7 @@
                                 <td><span class="totalCarte">0.00</span> €</td>
                             </tr>
                             <tr>
-                                <td>Abimee</td>
+                                <td>Occasion</td>
                                 {% if stock.abimee > 2 %}
                                     <td class="text-success">En stock</td>
                                 {% elseif stock.abimee > 0 %}

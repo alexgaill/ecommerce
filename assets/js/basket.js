@@ -20,6 +20,7 @@ function calculSomme (sommes){
 function formatedPrice(price){
     return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price);
 }
+
 /**
  * Calcul le prix de la ligne de produit en fonction de la quantité
  * @param {float} price 
@@ -53,4 +54,14 @@ $(".quantity").change(function () {
     total = Math.round(total*100)/100;
     $(this).closest('tr').find('.totalCarte').text(total);
     affichage();
+})
+
+/**
+ * Affiche en grand l'image small hover.
+ */
+$("#listImg img").hover(function(){
+    $url = $(this).attr("src");
+    $url = $url.split("_small");
+    $url = $url[0] + $url[1];
+    $("#imgBig").attr("src", $url);
 })

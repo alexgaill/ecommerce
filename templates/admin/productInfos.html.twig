@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="page-top-info">
+        <div class="container">
+        <p class="text-center h4">Mise à jour de la carte {{product.name}}</p>
+        </div>
+    </div>
+    <div class="container spad">
+        <div class="col-6 border-right">
+            <div class="row">
+                <div class="col-6">
+                    {% if product.imgSmall is not null %}
+                        <img src="{{product.imgSmall}}" alt="{{product.name}}">
+                    {% else %}
+                        <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
+                    {% endif %}
+                </div>
+                <div class="col-6">
+                    <div class="column">
+                        <h4 class="mb-2">{{product.name}}</h4>
+                        <p class="mb-4">{{product.setCode}}</p>
+                        <div class="row d-flex justify-content-around text-body">
+                            <p>{{product.type}}</p>
+                            {% if product.race is not null %}
+                                <p>{{product.race}}</p>
+                            {% endif %}
+                        </div>
+                        {% if product.atk is not null %}
+                            <div class="row d-flex justify-content-around text-body">
+                                <p>ATK: {{product.atk}}</p>
+                                <p>DEF: {{product.def}}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Images;
 use App\Entity\Stock;
 use App\Entity\Products;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,18 +42,30 @@ class CardFixtures extends Fixture
                             ->setLevel($card->level)
                             ->setAttribute($card->attribute);
                 }
+
                 $manager->persist($product);
 
-                $stock = new Stock();
+                if (array_key_exists('card_images', $card)) {
+                    foreach ($card->card_images as $cardImage) {
 
-                $stock->setCardId($product)
-                    ->setStockType('Française')
-                    ->setNew(3)
-                    ->setCorrect(3)
-                    ->setOccasion(3)
-                    ->setAbimee(3);
+                        $image = new Images();
+                        $image  ->setUrl($cardImage->image_url)
+                                ->setUrlSmall($cardImage->image_url_small)
+                                ->addProductsId($product);
 
-                $manager->persist($stock);
+                        $manager->persist($image);
+                    }
+                }
+                // $stock = new Stock();
+
+                // $stock->setCardId($product)
+                //     ->setStockType('Française')
+                //     ->setNew(3)
+                //     ->setCorrect(3)
+                //     ->setOccasion(3)
+                //     ->setAbimee(3);
+
+                // $manager->persist($stock);
 
                 }
             }else{
@@ -73,17 +86,27 @@ class CardFixtures extends Fixture
                 }
                 $manager->persist($product);
 
-                
-                $stock = new Stock();
+                if (array_key_exists('card_images', $card)) {
+                    foreach ($card->card_images as $cardImage) {
 
-                $stock->setCardId($product)
-                    ->setStockType('Française')
-                    ->setNew(3)
-                    ->setCorrect(3)
-                    ->setOccasion(3)
-                    ->setAbimee(3);
+                        $image = new Images();
+                        $image  ->setUrl($cardImage->image_url)
+                                ->setUrlSmall($cardImage->image_url_small)
+                                ->addProductsId($product);
+                        $manager->persist($image);
+                    }
+                }
 
-                $manager->persist($stock);
+                // $stock = new Stock();
+
+                // $stock->setCardId($product)
+                //     ->setStockType('Française')
+                //     ->setNew(3)
+                //     ->setCorrect(3)
+                //     ->setOccasion(3)
+                //     ->setAbimee(3);
+
+                // $manager->persist($stock);
             }
 
         }

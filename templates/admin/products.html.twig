@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-top-info">
+        <div class="container">
+        <p class="text-center h4">Liste des cartes à mettre à jour</p>
+        </div>
+    </div>
+    <div class="container spad">
+        <table>
+            <thead>
+                <th>Nom</th>
+                <th>img</th>
+                <th>imgSmall</th>
+                <th>setName</th>
+                <th>setCode</th>
+                <th>setRarity</th>
+                <th>cost</th>
+                <th>price</th>
+            </thead>
+            <tbody>
+                {% for product in emptyProducts %}
+                <tr>
+                    <td><a href="{{ path('productInfos', {id: product.id}) }}">{{ product.name}}</a></td>
+                    <td>{{ product.img}}</td>
+                    <td>{{ product.imgSmall}}</td>
+                    <td>{{ product.getsetName}}</td>
+                    <td>{{ product.setCode}}</td>
+                    <td>{{ product.setRarity}}</td>
+                    <td>{{ product.cost}}</td>
+                    <td>{{ product.price}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock body %}
