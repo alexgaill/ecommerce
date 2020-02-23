@@ -56,7 +56,6 @@ class ShopController extends AbstractController
         }
 
         if (!is_null($request->query->get('setCode')) && !empty($request->query->get('setCode'))) {
-            
             $newList = [];
             foreach ($products as $product) {
                 if (substr($product->getSetCode(), 0, 4) == $request->query->get('setCode')) {

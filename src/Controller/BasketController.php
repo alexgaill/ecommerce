@@ -56,7 +56,7 @@ class BasketController extends AbstractController
             $panier[$id.$key] = [
                 'id' => $id,
                 'name' => $product->getName(),
-                'imgSmall' => $product->getImgSmall(),
+                'imgSmall' => $product->getImages()[0]->getUrlSmall(),
                 'price' => $price,
                 'setCode' => $product->getSetCode(),
                 'type' => $key,
@@ -158,11 +158,11 @@ class BasketController extends AbstractController
         $commande = new Commande();
         $commande->setUserId($user)
                 ->setCommandeDate(new \DateTime())
-                ->setMontant($total)
+                ->setMontant(round($total, 2))
                 ->setLivraison($data->get('livraison'))
                 ->setTarifLivraison($data->get('tarif'))
                 ->setTypeLivraison($data->get('typeLivraison'))
-                ->setMontantTotal($total + $data->get('tarif'))
+                ->setMontantTotal(round($total + $data->get('tarif'), 2))
                 ->setStatut('attente')
                 ->setPoids($poids)
                 ->setTypePaiement($data->get('paiement'));

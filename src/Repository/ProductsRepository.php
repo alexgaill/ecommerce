@@ -52,20 +52,21 @@ class ProductsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return Products[] Returns an array of Products objects
      */
-    public function findAllGrouped(): Query
+    public function findAllGrouped()
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.setCode')
             ->getQuery()
+            ->getResult()
         ;
     }
 
         /**
-     * @return Query
+     * @return Products[] Returns an array of Products objects
      */
-    public function findSearch($value): Query
+    public function findSearch($value)
     {
         return $this->createQueryBuilder('p')
             ->orWhere('p.name LIKE :val')
@@ -79,6 +80,7 @@ class ProductsRepository extends ServiceEntityRepository
             ->setParameter('val', '%' . $value . '%')
             ->orderBy('p.setCode')
             ->getQuery()
+            ->getResult()
         ;
     }
 
@@ -140,7 +142,7 @@ class ProductsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return Products
      */
 
     public function findIdQuery($value)

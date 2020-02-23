@@ -134,7 +134,7 @@
 	</footer>
 		{% block javascripts %}
             {{ encore_entry_script_tags('app') }}
-            {# {{ encore_entry_script_tags('basket') }} #}
+            {{ encore_entry_script_tags('basket') }}
 			{{ encore_entry_script_tags('arrivage') }}
 			{{ encore_entry_script_tags('tri') }}
 			{{ encore_entry_script_tags('slicknav') }}
@@ -144,7 +144,6 @@
 			{{ encore_entry_script_tags('jquery-ui') }}
 			{{ encore_entry_script_tags('main') }}
 			{{ encore_entry_script_tags('validation') }}
-			<script src="{{asset('js/basket.js')}}"></script>
         {% endblock %}
     </body>
 </html>

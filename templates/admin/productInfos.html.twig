@@ -10,11 +10,7 @@
         <div class="col-6 border-right">
             <div class="row">
                 <div class="col-6">
-                    {% if product.imgSmall is not null %}
-                        <img src="{{product.imgSmall}}" alt="{{product.name}}">
-                    {% else %}
-                        <img src="https://i.skyrock.net/4256/65844256/pics/photo_65844256_1.png" alt="{{product.name}}">
-                    {% endif %}
+                        <img src="{{product.getImages[0].url}}" alt="{{product.name}}">
                 </div>
                 <div class="col-6">
                     <div class="column">

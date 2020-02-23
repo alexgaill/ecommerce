@@ -26,7 +26,7 @@
             <h3 class="mt-5">Voici le résumé de celle-ci:</h3>
             <ul class="mt-5 list-group">
             {% for ligne in commande.getListLignesCommande %}
-                <li class="list-group-item">{{ ligne.getproductId.name}} | {{ligne.total | number_format(2, '.', ',')}}</li>
+                <li class="list-group-item">{{ ligne.productId.name}} | {{ligne.total | number_format(2, '.', ',')}}</li>
             {% endfor %}
             <li class="list-group-item">Livraison: {{commande.livraison}} | {{commande.tarifLivraison}}</li>
             <li class="list-group-item"><strong>Total: {{commande.montantTotal}}</strong></li>

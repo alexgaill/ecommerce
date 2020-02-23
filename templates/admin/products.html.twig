@@ -10,8 +10,8 @@
         <table>
             <thead>
                 <th>Nom</th>
-                <th>img</th>
-                <th>imgSmall</th>
+                {# <th>img</th>
+                <th>imgSmall</th> #}
                 <th>setName</th>
                 <th>setCode</th>
                 <th>setRarity</th>
@@ -22,8 +22,8 @@
                 {% for product in emptyProducts %}
                 <tr>
                     <td><a href="{{ path('productInfos', {id: product.id}) }}">{{ product.name}}</a></td>
-                    <td>{{ product.img}}</td>
-                    <td>{{ product.imgSmall}}</td>
+                    {# <td>{{ product.getImages()}}</td>
+                    <td>{{ product.imgSmall}}</td> #}
                     <td>{{ product.getsetName}}</td>
                     <td>{{ product.setCode}}</td>
                     <td>{{ product.setRarity}}</td>

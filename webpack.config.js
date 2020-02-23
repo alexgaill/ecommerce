@@ -36,7 +36,7 @@ Encore
     .addEntry('owlcarousel', './assets/js/owl.carousel.min.js')
     .addEntry('zoom', './assets/js/jquery.zoom.min.js')
     .addEntry('main', './assets/js/main.js')
-    .addEntry('map', './assets/js/map.js')
+    // .addEntry('map', './assets/js/map.js')
 
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

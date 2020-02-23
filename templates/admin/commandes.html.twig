@@ -8,44 +8,44 @@
     </div>
     <div class="container spad">
         <table class="table table-hover table-sm">
-        <thead class="text-primary">
-            <td>N° de commande</td>
-            <td>Nom</td>
-            <td>Prénom</td>
-            <td>Adresse</td>
-            <td>Livraison</td>
-            <td>Type Livraison</td>
-            <td>Montant Total</td>
-            <td>Type Paiement</td>
-            <td>Etat</td>
-            <td>#</td>
-        </thead>
-        <tbody>
-            {% for commande in commandes %}
-                <tr>
-                <td>{{ commande.id }}</td>
-                <td>{{ commande.getUserId.nom }}</td>
-                <td>{{ commande.getUserId.prenom }}</td>
-                <td>{{ commande.getUserId.adresse }} / 
-                    <p>{{ commande.getUserId.ville }} / {{ commande.getUserId.codePostal }}</p>
-                </td>
-                <td>{{ commande.livraison }}</td>
-                <td>{{ commande.typeLivraison }}</td>
-                <td>{{ commande.montantTotal }}</td>
-                <td>{{ commande.typePaiement }}</td>
-                <td>{{ commande.statut }}</td>
-                <td>
-                    <select class="statutCommande" id="{{ commande.id }}">
-                        <option value="attente">Attente</option>
-                        <option value="payee">Payée</option>
-                        <option value="envoyee">Envoyée</option>
-                        <option value="livree">Livrée</option>
-                        <option value="erreur">Erreur</option>
-                    </select>
-                </td>
-                </tr>
-            {% endfor %}
-        </tbody>
+            <thead class="text-primary">
+                <td>N° de commande</td>
+                <td>Nom</td>
+                <td>Prénom</td>
+                <td>Adresse</td>
+                <td>Livraison</td>
+                <td>Type Livraison</td>
+                <td>Montant Total</td>
+                <td>Type Paiement</td>
+                <td>Etat</td>
+                <td>#</td>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                    <tr>
+                    <td>{{ commande.id }}</td>
+                    <td>{{ commande.getUserId.nom }}</td>
+                    <td>{{ commande.getUserId.prenom }}</td>
+                    <td>{{ commande.getUserId.adresse }} / 
+                        <p>{{ commande.getUserId.ville }} / {{ commande.getUserId.codePostal }}</p>
+                    </td>
+                    <td>{{ commande.livraison }}</td>
+                    <td>{{ commande.typeLivraison }}</td>
+                    <td>{{ commande.montantTotal }}</td>
+                    <td>{{ commande.typePaiement }}</td>
+                    <td>{{ commande.statut }}</td>
+                    <td>
+                        <select class="statutCommande" id="{{ commande.id }}">
+                            <option value="attente">Attente</option>
+                            <option value="payee">Payée</option>
+                            <option value="envoyee">Envoyée</option>
+                            <option value="livree">Livrée</option>
+                            <option value="erreur">Erreur</option>
+                        </select>
+                    </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 {% endblock %}
