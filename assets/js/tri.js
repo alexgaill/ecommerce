@@ -35,7 +35,6 @@ function checkParam(checkbox, paramName){
 
                 for (const input of checkbox) {
                     for (const eachParam of activeParam){
-                        console.log(activeParam)
                         if (input.getAttribute("data-etat") != null &&
                             input.getAttribute("data-etat") != ""){
                             if (input.dataset.etat == eachParam){

@@ -179,7 +179,7 @@ $.ajax({
             }
         })
         .done(function(datas){
-            document.location = "./basket/";
+            document.location = "../";
         })
     })
 

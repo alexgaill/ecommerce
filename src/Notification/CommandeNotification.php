@@ -18,16 +18,18 @@ class CommandeNotification
     /**
      * Undocumented function
      *
-     * @param User $user
+     * @param Commande $commande
+     * @param LigneCommande[] $lignes
      * @return void
      */
-    public function notify(Commande $commande)
+    public function notify(Commande $commande, $lignes)
     {
         $message = new \Swift_Message('Votre commande n°: ' . $commande->getId());
         $message->setFrom('contact@steptosuccess.fr', 'YCS')
                 ->setTo($commande->getUserId()->getEmail())
                 ->setBody($this->renderer->render('emails/commande.html.twig',[
-                    'commande' => $commande
+                    'commande' => $commande,
+                    'lignes' => $lignes
                 ]), 'text/html');
         $this->mailer->send($message);
     }

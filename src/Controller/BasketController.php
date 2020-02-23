@@ -169,6 +169,7 @@ class BasketController extends AbstractController
         
         $manager->persist($commande);
 
+        $lignes = array();
         foreach ($panier as $ligne) {
             $productLine = $productsRepository->find($ligne["id"]);
             $ligneCommande = new LigneCommande();
@@ -190,12 +191,13 @@ class BasketController extends AbstractController
                 ->setCorrect($stock->getCorrect() - $ligne["correct"])
                 ->setOccasion($stock->getOccasion() - $ligne["occasion"])
                 ->setAbimee($stock->getAbimee() - $ligne["abimee"]);
-
+        
+        array_push($lignes, $ligneCommande);
         }
 
         $manager->flush();
 
-        $notification->notify($commande);
+        $notification->notify($commande, $lignes);
 
         return new JsonResponse('ok');
     }
