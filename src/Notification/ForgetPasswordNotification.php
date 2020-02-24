@@ -24,7 +24,7 @@ class ForgetPasswordNotification
     public function notify(User $user)
     {
             $message = new \Swift_Message('Réinitialisation de votre mot de passe sur YCS');
-            $message->setFrom('contact@steptosuccess.fr', 'YCS')
+            $message->setFrom('no-reply@ycs.fr', 'YCS')
             ->setTo($user->getEmail())
             ->setBody($this->renderer->render('emails/forgetPassword.html.twig',[
                 'user' => $user

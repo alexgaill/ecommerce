@@ -1,6 +1,15 @@
 {% extends "base.html.twig" %}
 
+{% block title %}YCS: Description du produit {{product.name}}{% endblock title %}
+{% block description %}Informations concernant la carte {{product.name}} et quantités en stock de cartes neuves, bonnes, correctes et d'occasions{% endblock description %}
+{% block canonical %}http://ycs.fr/card{% endblock canonical %}
+
 {% block body %}
+    <div class="page-top-info">
+        <div class="container">
+        <h1 class="text-center h4">Résumé de {{product.name}}</h1>
+        </div>
+    </div>
     <div class="container spad">
         <div class="row spad">
             <div class="col-6 border-right">

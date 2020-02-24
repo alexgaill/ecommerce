@@ -1,14 +1,19 @@
 {% extends "base.html.twig" %}
 
+{% block title %}YCS: validation de votre commande{% endblock title %}
+{% block description %}Validation de vos coordonnées et du choix de livraison pour votre commande de cartes{% endblock description %}
+
+
+
 {% block body %}
     <div class="page-top-info">
         <div class="container">
-        <p class="h4 text-center">Validation et commande</p>
+        <h1 class="h4 text-center">Validation de votre commande de cartes</h1>
         </div>
     </div>
     {% if app.user %}
         <div class="container mt-5">
-            <h3>Récapitulatif de vos coordonnées</h3>
+            <h2 class="h3">Récapitulatif de vos coordonnées</h2>
 
             <div class="row mt-5">
                 <dl class="row col-6">
@@ -40,7 +45,7 @@
         <div class="spad">
             <div class="row justify-content-around">
                 <div class="mx-auto col-4">
-                    <h3>Livraison</h3>
+                    <h2 class="h3">Livraison</h2>
                     
                     <div class="mt-5">
                         <div class="form-group">
@@ -101,7 +106,7 @@
                         <div class="row justify-content-between">
 
                             <div class="col-5">
-                                <h4 class="mb-3 text-center"><ins>Récapitulatif</ins></h4>
+                                <h3 class="mb-3 text-center h4"><ins>Récapitulatif</ins></h3>
                                 <dl class="row">
                                     <dt class="col-sm-6">Panier:</dt>
                                     <dd class="col-sm-6" id="recapPanier">{{ total|number_format(2, '.', ',') }} €</dd>
@@ -113,7 +118,7 @@
                             </div>
                             <div class="col-5">
                                 <div class="text-center">
-                                    <h4 class="mb-3 tet-center"><ins>Moyen de paiement</ins></h4>
+                                    <h3 class="mb-3 tet-center h4"><ins>Moyen de paiement</ins></h3>
                                     <select name="typePaiement" id="typePaiement" class="mt-3">
                                         <option value="Especes">Espèces</option>
                                         <option value="Cheque">Chèque</option>
@@ -134,11 +139,11 @@
         <div class="container spad">
             <div class="row justify-content-around">
                 <div class="">
-                    <h4>Vous avez un compte ?</h4>
+                    <h3 class="h4">Vous avez un compte ?</h3>
                     <a class="spad" href="{{ path('login') }}"><button class="btn btn-primary">Connectez-vous</button></a>
                 </div>
                 <div class="">
-                    <h4>Vous n'êtes pas encore inscrit ?</h4>
+                    <h3 class="h4">Vous n'êtes pas encore inscrit ?</h3>
                     <a href="{{ path('signup') }}"><button class="btn btn-primary">Inscription</button></a>
                 </div>
             </div>

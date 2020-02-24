@@ -25,7 +25,7 @@ class CommandeNotification
     public function notify(Commande $commande, $lignes)
     {
         $message = new \Swift_Message('Votre commande n°: ' . $commande->getId());
-        $message->setFrom('contact@steptosuccess.fr', 'YCS')
+        $message->setFrom('no-reply@ycs.fr', 'YCS')
                 ->setTo($commande->getUserId()->getEmail())
                 ->setBody($this->renderer->render('emails/commande.html.twig',[
                     'commande' => $commande,

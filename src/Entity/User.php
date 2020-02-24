@@ -281,7 +281,7 @@ class User implements UserInterface
     public function getSalt() {}
 
     public function getRoles() {
-        if ( $this->email == 'contact@steptosuccess.fr') {
+        if ( $this->email == 'contact@ycs.fr') {
             return ['ROLE_ADMIN'];
         } else {
             return ['ROLE_USER'];

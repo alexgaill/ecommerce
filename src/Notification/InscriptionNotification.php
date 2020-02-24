@@ -24,7 +24,7 @@ class InscriptionNotification
     public function notify(User $user)
     {
             $message = new \Swift_Message('Validation de votre inscription sur YCS');
-            $message->setFrom('contact@steptosuccess.fr', 'YCS')
+            $message->setFrom('no-reply@ycs.fr', 'YCS')
             ->setTo($user->getEmail())
             ->setBody($this->renderer->render('emails/inscription.html.twig',[
                 'user' => $user

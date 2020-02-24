@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}YCS!{% endblock %}</title>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148590916-2"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-148590916-2');
+		</script>
+
+        <title>{% block title %}YCS: Vendeur particulier de cartes Yugioh{% endblock %}</title>
 
         <meta charset="UTF-8">
-        <meta name="description" content="YCS - Yugioh Card Seller, Vente de cartes Yugioh neuves et d'occasion">
-        <meta name="keywords" content="Yugioh, Yu-gi-oh, cartes, collection, Achat, Vente">
+		<meta name="author" content="Alexandre Gaillot">
+		<meta name="language" content="FR">
+        <meta name="description" content="{% block description %}YCS - Yugioh Card Seller, Vente de cartes Yugioh à l'unité neuves et d'occasion en France. Réapprovisionnement fréquent pour compléter votre collection de cartes à jouer.{% endblock %}">
+        <meta name="keywords" content="Yugioh, Yu-gi-oh, cartes, collection, achat, vente, neuf, neuves, occasion, cardmarket">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
-
+		<link rel="canonical" href="{% block canonical %}{% endblock canonical %}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -24,7 +37,7 @@
 					<div class="col-lg-2 text-center text-lg-left">
 						<!-- logo -->
 						<a href="{{ path('home')}}}}" class="site-logo">
-							<h2>Y C S</h2>
+							<p class="h2">Y C S</p>
 						</a>
 					</div>
 					<div class="col-xl-6 col-lg-5">
@@ -113,7 +126,7 @@
                     </div>
                     <div class="con-info">
                         <span>Mail</span>
-                        <p>contact@steptosuccess.fr</p>
+                        <p>contact@ycs.fr</p>
                     </div>
                 </div>
 			</div>
